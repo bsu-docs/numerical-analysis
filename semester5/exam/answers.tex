@@ -1,0 +1,375 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{xparse}
+\usepackage{enumitem}
+\usepackage{centernot}
+\usepackage{comment}
+
+\usepackage[left=1cm,right=1cm,top=1cm,bottom=1cm]{geometry}
+
+\usepackage{setspace}
+%\doublespace
+\usepackage{epstopdf}
+\usepackage{graphicx}
+\usepackage{titlesec}
+
+\newtheorem*{theorem}{Теорема}
+\newtheorem*{lemma}{Лемма}
+
+\newcommand{\norma}{}
+\usepackage{mainstyle}
+\renewcommand{\theenumii}{\asbuk{enumii}}
+
+% For cyrillic symbols in "enumerate" environment.
+\renewcommand{\theenumii}{\asbuk{enumii}}
+\AddEnumerateCounter{\asbuk}{\@asbuk}{ы}
+
+
+%====================================================================================
+%   ENVIORONMENTS
+
+\newenvironment{definition}
+{\begin{statement}{Определение}}
+    {\end{statement}}
+
+\newenvironment{characteristics}
+{\begin{statementItemed}{Свойства}}
+    {\end{statementItemed}}
+
+\newenvironment{note}
+{\begin{statementDotted}{Замечание}
+
+        }
+    {\end{statementDotted}}
+
+\newenvironment{notes}
+{\begin{statementItemed}{Замечания}}
+    {\end{statementItemed}}
+
+\newenvironment{proofUndotted}
+{{\raggedright \textit{Доказательство}}}
+{\begin{flushright}
+       \boxed{}
+ \end{flushright}
+}
+
+\newenvironment{noteo}{}{}
+\RenewDocumentEnvironment{noteo}{o}
+{{\raggedright \textbf{Замечание}\IfValueTF{#1}{ (\textit{#1})}{}.}$  $
+
+}
+{}
+
+\newenvironment{consequence}{}{}
+\RenewDocumentEnvironment{consequence}{o}
+{{\raggedright \textbf{Следствие}\IfValueTF{#1}{ (\textit{#1})}{}.}$  $
+
+    }
+{}
+
+\NewDocumentEnvironment{consequences}{o}
+{\raggedright \textbf{Следствия}\IfValueTF{#1}{(\textit{#1})}{}:\begin{enumerate}}
+    {\end{enumerate}}
+
+
+\RenewDocumentEnvironment{theorem}{o}
+{{\raggedright
+  \textbf{Теорема}\IfValueTF{#1}{ (\textit{#1})}{}}.$  $
+
+}
+
+\NewDocumentEnvironment{plan}{o}
+{\raggedright \textbf{Краткий план}\IfValueTF{#1}{(\textit{#1})}{}:\begin{enumerate}}
+	{\end{enumerate}}
+
+\newenvironment{theoremNamed}{}{}
+\RenewDocumentEnvironment{theoremNamed}{m o}
+{{\raggedright
+  \textbf{Теорема #1}\IfValueTF{#2}{ (\textit{#2})}{}}.$  $
+
+}
+
+
+\RenewDocumentEnvironment{lemma}{o}
+{{\raggedright
+        \textbf{Лемма}\IfValueTF{#1}{ (\textit{#1})}{}}.$  $
+
+}
+
+\newenvironment{lemmaNamed}{}{}
+\RenewDocumentEnvironment{lemmaNamed}{m o}
+{{\raggedright
+        \textbf{Лемма #1}\IfValueTF{#2}{ (\textit{#2})}{}}.$  $
+
+}
+
+
+\newenvironment{exercise}
+{\begin{statementDotted}{Упражнение}}
+    {\end{statementDotted}}
+
+\newenvironment{example}
+{\begin{statementDotted}{Пример}}
+    {\end{statementDotted}}
+
+\newenvironment{examples}
+{\begin{statementItemed}{Примеры}}
+    {\end{statementItemed}}
+
+% =================================
+% math functions
+\newcommand{\abs}[1]{
+    \left\lvert #1 \right\rvert
+}
+
+\newcommand{\maxf}[1]{
+    \max \left\{ #1 \right\}
+}
+
+\newcommand{\suchthat}{
+    \;\ifnum\currentgrouptype=16 \middle\fi|\;
+}
+
+\newcommand{\arc}[1]{
+    \buildrel\,\,\frown\over{#1}
+}
+
+\DeclareMathOperator{\const}{\text{const}}
+
+\DeclareMathOperator{\fix}{\text{fix }}
+\DeclareMathOperator{\diam}{diam\,}
+\DeclareMathOperator{\mes}{mes}
+\DeclareMathOperator{\divergence}{div}
+
+\DeclareMathOperator{\arcsh}{arcsh}
+\DeclareMathOperator{\arth}{{arth}}
+\DeclareMathOperator{\arcth}{{arcth}}
+\DeclareMathOperator{\sgn}{sgn}
+
+\newcommand{\parenthesis}[1]{%
+    \left( #1 \right)
+}
+
+\newcommand{\plot}[1]{$ \text{Г}_{#1} $}
+
+\newcommand{\limlim}[2]
+{ \lim\limits_{ \substack{ #1 \\ #2 } } }
+
+\newcommand{\limitslimits}[2]
+{ \limits_{ \substack{ #1 \\ #2 } } }
+
+\newcommand{\limlimlim}[3]
+{ \lim\limits_{ \substack{ #1 \\ #2 \\ #3 } } }
+
+\newcommand{\nullFrac}{\dfrac{ }{}}
+
+\renewcommand{\emptyset}{\varnothing}
+
+\newcommand{\diint}{\displaystyle\iint}
+
+\newcommand{\liml}{\lim\limits}
+\newcommand{\intl}{\int\limits}
+\newcommand{\iintl}{\iint\limits}
+\newcommand{\diintl}{\diint\limits}
+\newcommand{\dintl}{\dint\limits}
+
+\newcommand{\suml}{\sum\limits}
+\newcommand{\sumnzi}{\sum\limits_{n=0}^{\infty}}
+\newcommand{\limninf}{\lim\limits_{n\to\infty}}
+\newcommand{\dintlzi}{\dintl_0^{+\infty}}
+
+
+%========================================================
+% text style
+
+\newcommand{\important}[1]{\textit{#1}}
+
+\newcommand{\dint}{\displaystyle\int}
+\newcommand{\dsum}{\displaystyle\sum}
+
+\newcommand{\oiint}[2]{
+    \begin{tikzpicture}[baseline=(C.base)]
+        \node(C) {$ \displaystyle \iintl_{#1}^{#2} $};
+        \draw (0,0.15) circle (0.25);
+        %\node[draw,circle,inner sep=1pt](C) ++ (0, 0.1) {$ \;\;\;\; $};
+    \end{tikzpicture}
+}
+
+\newcommand{\circled}[1]{
+    \begin{tikzpicture}[baseline=(C.base)]
+    \node[draw,circle,inner sep=1pt](C) {#1};
+    \end{tikzpicture}
+}
+
+\newcommand{\eqlhopital}{%
+    \overset{\circled{Л}}{=}}
+
+\newcommand{\neqlhopital}{%
+    \overset{\circled{Л}}{\neq}}
+
+\newcommand{\sqcase}[1]{%
+    \left[\begin{matrix}#1\end{matrix}\right]
+}
+
+\newcommand{\Arg}{%
+  \operatorname{Arg}
+}
+
+\newcommand{\Ln}{%
+  \operatorname{Ln}
+}
+
+\newcommand{\Arsh}{%
+  \operatorname{Arsh}
+}
+
+\newcommand{\Arch}{%
+  \operatorname{Arch}
+}
+
+\newcommand{\Arth}{%
+  \operatorname{Arth}
+}
+
+\newcommand{\Arcth}{%
+  \operatorname{Arcth}
+}
+
+\newcommand{\Arcsin}{%
+  \operatorname{Arcsin}
+}
+
+\newcommand{\Arccos}{%
+  \operatorname{Arccos}
+}
+
+\newcommand{\Arctg}{%
+  \operatorname{Arctg}
+}
+
+\newcommand{\Arcctg}{%
+  \operatorname{Arcctg}
+}
+
+\renewcommand{\th}{%
+  \operatorname{th}
+}
+
+\renewcommand{\cth}{%
+  \operatorname{cth}
+}
+
+
+\newcommand{\dvert}{\left.\nullFrac\right\vert}
+
+\renewcommand{\r}[1]{$\overset{\text{ }_\bullet\text{ }}{\text{#1}}$}
+
+\renewcommand{\norma}[1]{\left\lvert\left\lvert#1\right\rvert\right\rvert}
+\newcommand{\norm}[1]{\left\lvert\left\lvert#1\right\rvert\right\rvert}
+
+\newcommand{\RN}{\mathbb{R}^n}
+\newcommand{\R}[1]{\mathbb{R}^{#1}}
+
+% =================================
+% sets utilities
+
+\newcommand{\defineset}[2]{
+    \left\{ #1 \, \middle\vert \, #2 \right\}
+}
+
+\newcommand{\set}[1]{
+    \left\{ #1 \right\}
+}
+
+\newcommand{\colquestion}[1]{\section{#1}}
+\newenvironment{col-answer-preambule}
+               {\ignorespaces}
+               {\ignorespacesafterend}
+
+\begin{document}
+\begin{center}
+  \LARGE\underline{\textbf{Ответы к экзамену по курсу}}\\
+  \LARGE\underline{\textbf{ ``Методы Численного анализа''}}\\
+  \Large\textbf{(1-ый семестр 2016/2017 учебного года, специальность ``Информатикa'')}
+\end{center}
+
+{
+  % \renewcommand{\contentsname}{Содержание}
+  \tableofcontents
+}
+\newpage
+\input{question01}
+\newpage
+\input{question02}
+\newpage
+\input{question03}
+\newpage
+\input{question04}
+\newpage
+\input{question05}
+\newpage
+\input{question06}
+\newpage
+\input{question07}
+\newpage
+\input{question08}
+\newpage
+\input{question09}
+\newpage
+\input{question10}
+\newpage
+\input{question11}
+\newpage
+\input{question12}
+\newpage
+\input{question13}
+\newpage
+\input{question14}
+\newpage
+\input{question15}
+\newpage
+\input{question16}
+\newpage
+\input{question17}
+\newpage
+\input{question18}
+\newpage
+\input{question19}
+\newpage
+\input{question20}
+\newpage
+\input{question21}
+\newpage
+\input{question22}
+\newpage
+\input{question23}
+\newpage
+\input{question24}
+\newpage
+\input{question25}
+\newpage
+\input{question26}
+\newpage
+\input{question27}
+\newpage
+\input{question28}
+\newpage
+\input{question29}
+\newpage
+\input{question30}
+\newpage
+\input{question31}
+\newpage
+\input{question32}
+\newpage
+\input{question33}
+\newpage
+\input{question34}
+\newpage
+\end{document}
