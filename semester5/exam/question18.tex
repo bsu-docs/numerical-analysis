@@ -6,6 +6,92 @@
 
 \colquestion{Методы последовательного повышения порядка точности}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+Будем рассматривать уравнение $u' = f(x, y)$. Проинтегрируем на $[x_n, x_{n + 1}]$
+
+\begin{equation}
+  \label{18-integral}
+  u(x_{n + 1}) = u(x_n) + h\int\limits_0^1f(x_n + \alpha h, u(x_n + \alpha h))
+  d\alpha
+\end{equation}
+
+Заменим $t = x_n + \alpha h$. Заменим в \eqref{18-integral} интеграл квадратурной
+суммой общего вида, получим
+\begin{equation}
+  \label{18-sum}
+  y_{n + 1} = y_n + h\sum\limits_{i = 0}^qA_if(x_n + \alpha_ih, y(x_n + \alpha_ih)
+\end{equation}
+
+Получим 2 набора параметров $A_i$ и $\alpha_i, i = \overline{0, q}$. В
+\eqref{18-sum} $2q + 2$ параметров.
+
+Параметры $A_i$ и $\alpha_i$ выбираем так, чтобы квадратурная формула, которую
+мы использовали
+\begin{equation}
+  \label{18-quad-formula}
+  \int\limits_0^1f_{n + \alpha}d\alpha \approx
+  \sum\limits_{i = 0}^qA_if_{n + \alpha_i},
+\end{equation}
+была точна для всех полиномов степени $k - 1$, где $0 < k \leqslant 2q + 2$.
+
+В результате получим систему из $k$ уравнений, в которые входят $2q + 2$
+неизвестных параметров.
+\begin{equation}
+  \label{18-system}
+  \sum\limits_{i = 0}^qA_i\alpha_i^j = \dfrac{1}{j + 1}, j = \overline{0, k - 1}
+\end{equation}
+
+В дальнейшем будем использовать обозначение
+\begin{align*}
+  f_{n + \alpha}^{[m]} = f(x_n + \alpha h, y^{[m]}(x_n + \alpha h)),
+\end{align*}
+где $y_{n + \alpha}^{[m]}$ - приближённое решение в точке $x_n + \alpha h$ с
+погрешностью $O(h^m)$.
+
+Систему \eqref{18-system} можно получить также из требования, чтобы разложить
+в ряд Тейлора по степеням $h$
+\begin{equation}
+  u(x_n + h) - u(x_n) \approx h\sum\limits_{i = 0}^qA_iu'(x_n + \alpha h)
+\end{equation}
+совпадающее до членов при $h^k$ включительно. При этом локальная погрешность
+\begin{equation}
+  \psi_{n + 1} = u_{n + 1} - u_n - h\sum\limits_{i = 0}^qA_i f_{n + \alpha_i}
+\end{equation}
+будет иметь вид
+\begin{equation}
+  \psi_{n + 1} = h^{k + 1}u_n^{(k + 1)}\left[\dfrac{1}{(k + 1)!} -
+  \dfrac{1}{k!}\sum\limits_{i = 0}^qA_i d_i^k\right] + O(h^{k + 2})
+\end{equation}
+
+Поскольку весовая функция в формуле \eqref{18-quad-formula} в среднем равна $1$,
+то квадратурная формула может быть построена единственным образом с НАСТ
+$= 2q + 1, \forall q \geqslant 0$, то когда $k = 2q + 2$, то система
+\eqref{18-system} имеет единственное решение, причём $0 \leqslant A_i \leqslant 1,
+0 \leqslant \alpha_i \leqslant 1, i = \overline{0, q}$.
+
+Для определения неизвестных величин $y_{n + \alpha_i}$ в \eqref{18-sum} можно
+строить аналогичные методы
+\begin{equation}
+  y_{n + \alpha_i}^{[k]} = y_n + \alpha_i h\sum\limits_{j = 0}^{q_1}B_jf_n +
+  \alpha_i\beta_j, q_1 \leqslant q
+\end{equation}
+Значение $y_{n + \alpha_i\beta_j}$ также определяется по аналогичным формулам
+с погрешностью $O(h^{k - 1})$. Неизвестные параметры $\beta_j, B_j$ будут
+определятся из систем, аналогичных \eqref{18-system}. С каждым шагом порядок
+точности будет понижаться, т.e. $q \geqslant q_1 \geqslant \ldots \geqslant 1$.
+\begin{equation}
+  \sum\limits_{i = 0}^{q_1}B_i\beta_i^j = \dfrac{1}{j + 1}, j = \overline{0, k - 2}
+\end{equation}
+
+Завершать данную схему будут явные формулы Эйлера
+\begin{equation}
+  y_{n + \alpha_i\beta_j\cdot\ldots\cdot\gamma_m}^{[2]} = y_n^{[k + 1]} +
+  \alpha_i\beta_j\cdot\ldots\cdot\gamma_m hf_n^{[k + 1]}
+\end{equation}
+
+Построим в качестве примера метод второго порядка точности, т.е. $k = 2$. Если
+взять $q = 0$, то система \eqref{18-system} имеет единственное решение
+$A_0 = 1, \alpha_0 = \dfrac{1}{2}$. Получаем формулу
+\begin{align}
+  y_{n + 1}^{[3]} = y_n^{[3]} + hf_{n + \frac{1}{2}}^{[2]}\\
+  y_{n + 1}^{[2]} = y_n^{[3]} + \dfrac{h}{2}f_n^{[3]}\\
+\end{align}
