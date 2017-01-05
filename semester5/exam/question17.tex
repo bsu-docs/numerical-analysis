@@ -1,11 +1,138 @@
-\begin{col-answer-preambule}
+ \begin{col-answer-preambule}
 	\begin{plan}
     \item пока пусто
 	\end{plan}
 \end{col-answer-preambule}
 
-\colquestion{Сходимость метода Эйлера}
+\colquestion{Сходимость явного метода Эйлера}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+При иcпользовании приближённых методом основным является вопрос о сходимости.
+Сформулируем понятие сходимости, когда $h \to 0$. Зафиксируем некоторую точку
+$x$ и будем строить последовательность сеток $\omega_h$ таких, что $h \to 0,
+x_n = x_0 + nh = x$.
+
+\begin{definition}
+  Говорят, что методя сходится в точке $x$, если разностное решение
+  $\abs{y_n(x) - u(x)} \xrightarrow[h \to 0]{} 0$.
+\end{definition}
+
+\begin{definition}
+  Метод сходится на отрезке $[x_0, x]$, если он сходится в каждой точке этого
+  отрезка.
+\end{definition}
+
+\begin{definition}
+  Говорят, что метод имеет порядок точности $p > 0$, если $\abs{y_n(x) - u(x)}
+  = O(h^p), h > 0$.
+\end{definition}
+
+Исследуем сходимость явного метода Эйлера
+\begin{align}
+  &y_{n + 1} = y_n + hf_n\\
+  \label{17-taylor}
+  &u(x_{n + 1}) = u(x_n) + hu'(x_n) + \dfrac{h^2}{2}u''(\xi_n),\\
+  \nonumber
+  &x_n < \xi_n < x_{n + 1}, u(x) \in C^2[x_0, x]\\
+  &u' = f(x, u)\\
+  &\eqref{17-taylor} \Leftrightarrow u(x_{n + 1}) = u(x_n) + hf(x_n, u(x_n)) +
+  \dfrac{h^2}{2}u''(\xi_n)\\
+  \label{17-some-cons}
+  &u(x_{n + 1}) - y_{n + 1} = u(x_n) - y_n + h(f(x_n, u(x_n)) - f(x_n, y_n)) +
+  \dfrac{h^2}{2}u''(\xi_n)
+\end{align}
+
+Введём обозначение погрешности в $n$-ой точке
+\begin{equation}
+  E_n = u(x_n) - y_n
+\end{equation}
+
+Будем полагать, что функция $f$ удовлетворяет условию Лившица с $\const L$ по
+второму аргумент, тогда $\eqref{17-some-cons} \Rightarrow$
+
+\begin{equation}
+  \abs{E_{n + 1}} \leqslant \abs{E_n} + hL(\abs{u(x_n) - y_n}) + \dfrac{h^2}{2}
+  \abs{u''(\xi_n)}.
+\end{equation}
+
+\begin{definition}
+  $M_2 = \underset{x \in [a, b]}{\max} \abs{u''(x)}$
+\end{definition}
+
+\begin{equation}
+  \label{17-error-approx}
+  \abs{E_{n + 1}} \leqslant \abs{E_n}(1 + hL) + \dfrac{h^2}{2}M_2, n = 0, 1,
+  \ldots
+\end{equation}
+
+Слагаемое $\dfrac{h^2}{2}M_2$ - оценка локальной погрешности метода, которая
+возникает на очередном шаге.
+
+Для оценки погрешности $E_n$ рассмотрим обобщение неравенства
+\eqref{17-error-approx}. Будем полагать, что $\exists \delta > 0, M > 0$,
+такие, что последовательность $d_0, d_1, \ldots$ удовлетворяет неравенству
+\begin{equation}
+  d_{n + 1} \leqslant (1 + \delta)d_n + M, n = 0, 1, \ldots
+\end{equation}
+
+Тогда
+\begin{align}
+  \nonumber
+  &d_1 \leqslant (1 + \delta)d_0 + M\\
+  \nonumber
+  &d_2 \leqslant (1 + \delta)d_1 + M \leqslant (1 + \delta)^2d_0 +
+  M(1 + (1 + \delta))\\
+  \nonumber
+  &\ldots\\
+  &d_n \leqslant (1 + \delta)^n + M(1 + (1 + \delta) + \ldots
+  + (1 + \delta)^{n - 1})\\
+  \label{17-dlim}
+  &d_n \leqslant (1 + \delta)^nd_0 + M\dfrac{(1 + \delta)^n - 1}{\delta}
+\end{align}
+
+Из разложения экспоненты:
+\begin{align}
+  &e^{\delta} = 1 + \delta + \dfrac{\delta^2}{2}e^{\xi}, 0 < \xi < \delta
+  \Rightarrow 1 + \delta \leqslant e^{\delta}\\
+  \label{17-expn}
+  &(1 + \delta)^n \leqslant e^{n\delta}
+\end{align}
+
+Подставим \eqref{17-expn} в \eqref{17-dlim} и получим оценку:
+\begin{equation}
+  \label{17-dlim2}
+  d_n \leqslant e^{n\delta}d_0 + M\dfrac{e^{n\delta} - 1}{\delta}
+\end{equation}
+
+Применим неравенство \eqref{17-dlim2} к формуле \eqref{17-error-approx}
+\begin{align}
+  &\abs{E_n} \leqslant e^{nhL}\abs{E_0} + \dfrac{hM_2}{2L}
+  \left(e^{nhL} - 1\right)\\
+  \nonumber
+  &nh = x_n - a, E_0 = u_0 - y_0 = 0\\
+  &\abs{u(x_n) - y_n} \leqslant \dfrac{hM_2}{2L}\left(e^{L(b - a)} - 1\right)\\
+  \label{17-max-error}
+  &\underset{h}\max\abs{u(x_n) - y_n} \leqslant \dfrac{hM_2}{2L}
+  \left(e^{L(b - a)} - 1\right) \xrightarrow[h \to 0]{} 0
+\end{align}
+
+В общем случае следует учитывать погрешность округления. На практике, когда
+вычисляется $f(x_n, y_n)$, на самом деле мы находим $f(x_n, y_n) + \varepsilon_n$.
+Кроме этого, когда по формуле Эйлера мы находим
+\begin{equation}
+  y_{n + 1} = y_n + h(f(x_n, y_n) + \varepsilon_n) + \rho_n
+\end{equation}
+появляется погрешность $\rho_n$.
+
+Будем полагать, что $\abs{\rho_n} \leqslant \rho, \abs{\varepsilon_n} \leqslant
+\varepsilon, \forall h \leqslant h_0$. Тогда формулу \eqref{17-max-error}
+надо изменить следующим образом
+\begin{equation}
+  \label{17-real-error}
+  \underset{h}\max\abs{u(x_n) - y_n} \leqslant \dfrac{1}{L}
+  \left(e^{L(b - a)} - 1\right)\left(\dfrac{hM_2}{2} + \varepsilon +
+  \dfrac{\rho}{h}\right)
+\end{equation}
+
+Из оценки \eqref{17-real-error} следует, что повышать точность за счёт уменьшения
+шага $h$ можно только до некоторого предела, за которым погрешность округления
+будет доминировать.
