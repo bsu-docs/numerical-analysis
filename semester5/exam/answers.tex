@@ -10,8 +10,9 @@
 \usepackage{enumitem}
 \usepackage{centernot}
 \usepackage{comment}
+\usepackage{chngcntr}
 
-\usepackage[left=1cm,right=1cm,top=1cm,bottom=1cm]{geometry}
+\usepackage[left=1cm,right=1cm,top=1cm,bottom=2cm]{geometry}
 
 \usepackage{setspace}
 %\doublespace
@@ -30,7 +31,7 @@
 \renewcommand{\theenumii}{\asbuk{enumii}}
 \AddEnumerateCounter{\asbuk}{\@asbuk}{ы}
 
-
+\counterwithin*{equation}{subsection}
 %====================================================================================
 %   ENVIORONMENTS
 

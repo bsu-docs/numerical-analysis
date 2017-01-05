@@ -6,6 +6,143 @@
 
 \colquestion{Метод Пикара и метод рядов Тейлора}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+\subsection{Метод Пикара}
+
+Рассмотрим задачу Коши для однородного дифференциального уравнения:
+\begin{equation}
+  \label{15-picar1}
+  \begin{cases}
+    &u'(x) = f(x, u), u = u(x), x \in [x_0, x_l]\\
+    &u(x_0) = u_0
+  \end{cases}
+\end{equation}
+
+Проинтегрируем  уравнение \eqref{15-picar1}
+\begin{equation}
+  \label{15-picar-integral}
+  u(x) = u(x_0) + \int\limits_{x_0}^xf(t, u(t))dt
+\end{equation}
+
+$y$ - приближённое решение, $s$ - номер итерации.
+\begin{equation}
+  \label{15-picar-formula}
+  \begin{cases}
+    &y_s(x) = u_0 + \dint\limits_{x_0}^xf(t, y_{s - 1}(t))dt\\
+    &y_0(t) = u_0
+  \end{cases}
+\end{equation}
+
+Этот метод удобен, если интеграл можно вычислить аналитически. Докажем
+сходимость метода Пикара.
+
+Пусть в некоторой ограниченной области $G$ функция $f(x, u)$ непрерывная и
+удовлетворяет условию Лившица по переменной $u$:
+\begin{align}
+  \abs{f(x_1, u_1) - f(x_1, u_2)} \leqslant L\abs{u_1 - u_2}\\
+  \label{15-limits}
+  \begin{cases}
+    &\abs{x - x_0} \leqslant E, \forall x \in G\\
+    &\abs{u - u_0} \leqslant V, E, V - \const
+  \end{cases}
+\end{align}
+
+\eqref{15-limits} - условия ограниченности, выполняются в силу ограниченности
+области $G$.
+
+\begin{align}
+  \eqref{15-picar-integral}, \eqref{15-picar-formula} \Rightarrow
+  \abs{y_s(x) - u(x)} = \abs{\int\limits_{x_0}^x f(t, y_{s - 1}(t))dt -
+                             \int\limits_{x_0}^x f(t, u(t))dt}\\
+  \abs{y_s(x) - u(x)} \leqslant \int\limits_{x_0}^x
+      \abs{f(t, y_{s - 1}(t)) - f(t, u(t))}dt
+\end{align}
+
+Обозначим $z_s(x) = y_s(x) - u(x)$ - погрешность в точке $x$.
+
+\begin{equation}
+  \abs{z_s(x)} \leqslant L\int\limits_{x_0}^x\abs{z_{s - 1}(t)}dt
+\end{equation}
+
+Если $s = 0$, то
+\begin{equation}
+  \label{15-error-formula}
+  \begin{split}
+    &\abs{z_0(x)} = \abs{u_0 - u(x)} \leqslant V \text{ - погрешность начального
+    приближения}.\\
+    &\abs{z_1(x)} \leqslant LV\abs{x - x_0}\\
+    &\abs{z_2(x)} \leqslant \dfrac{1}{2}L^2V\abs{(x - x_0)^2}\\
+    &\ldots\\
+    &\abs{z_s(x)} \leqslant \dfrac{1}{s!}L^sV\abs{(x - x_0)^s}\\
+  \end{split}
+\end{equation}
+
+Формула Стирлинга:
+\begin{align*}
+  n! \approx \dfrac{\sqrt{2\pi}n^{n + \frac{1}{2}}}{e^n}(1 + \varepsilon_n),
+  \lim\limits_{n \to \infty}\varepsilon_n = 0
+\end{align*}
+\begin{equation}
+  \eqref{15-error-formula} \Leftrightarrow \abs{z_s(x)} \leqslant
+  \dfrac{1}{s!}L^sVE^s
+\end{equation}
+
+Используя формулу Стирлинга
+\begin{equation}
+  \label{15-error-approx}
+  \abs{z_s(x)} \leqslant \dfrac{v}{\sqrt{2\pi s}}\left(\dfrac{eEL}{s}\right)^s
+\end{equation}
+
+$\eqref{15-error-approx} \Rightarrow \abs{z_s(x)} \xrightarrow[s \to \infty]{}0
+\Rightarrow $ итерационный процесс сходится.
+
+\subsection{Метод рядов Тейлора}
+
+Рассмотрим
+\begin{equation}
+  \label{15-taylor-example}
+  \begin{cases}
+    &u' = f(x, u), x \in [x_0, x_l]\\
+    &u(x_0) = u_0\\
+  \end{cases}
+\end{equation}
+
+Продифференцируем \eqref{15-taylor-example} по $x$:
+\begin{equation}
+  \label{15-taylor-diff}
+  \begin{split}
+    &u'' = f_x + f_u\cdot u' = f_x + f\cdot f_u\\
+    &u''' = f_{xx} + 2f_{xu}u' + f_{uu}u'^2 + f_u u''\\
+    &\ldots
+  \end{split}
+\end{equation}
+
+Подставим в формулу \eqref{15-taylor-diff} в качестве $x = x_0, u = u_0$,
+последовательно находим значения $u'(x_0), u''(x_0), u'''(x_0)$ и т. д.
+Получаем ряд Тейлора:
+\begin{equation}
+  u(x) \approx y_n(x) = \sum\limits_{i = 0}^n\dfrac{u^{(i)}(x_0)}{i!}\cdot
+  (x - x_0)^i
+\end{equation}
+
+Если $\abs{x - x_0}$ не превышает радиуса сходимости ряда Тейлора, то
+приближенное решение $y_n(x) \xrightarrow[n \to \infty]{} u(x)$.
+
+Иногда полезно разбить исходный отрезок $[x_0, x_l]$ на $N$ частей
+$[x_{j - 1}, x_j], j = \overline{1, N}, x_N = x_l$. Отрезки не обязательно
+равные. На каждом отрезке применим метод рядов Тейлора для более точного
+решения.
+
+Рассмотрим произвольный отрезок $[x_j, x_{j + 1}]$. Будем считать, что $y_j$
+найдено. Значит, мы можем найти $u^{(i)}(x_j)$. Тогда применяя метод рядов,
+можно приблизить на этом отрезке
+
+\begin{equation}
+  \begin{split}
+    &u(x) \approx v_j(x) = \sum\limits_{i = 0}^n\dfrac{u_j^{(i)}}{i!}(x - x_j)^i\\
+    &y_{j + 1} = v_j(x_{j + 1})
+  \end{split}
+\end{equation}
+
+При использовании метода рядов необходимо находить значения
+$\approx \dfrac{n(n + 1)}{2}$ различных функций, поэтому на практике обычно
+ограничиваются первым и вторым порядком точности (2-3 производные).
