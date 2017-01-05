@@ -6,6 +6,130 @@
 
 \colquestion{Методы Рунге-Кутта}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+Исходное уравнение $u' = f(x, u)$. Интегрируем на отрезке $[x_n, x_n + h]$.
+
+\begin{equation}
+  \label{19-integral}
+  u_{n + 1} = u_n + h\int\limits_0^1f(x_n + \alpha h, u(x_n + \alpha h))d\alpha
+\end{equation}
+
+Для вычисления интеграла предлагается использование следующего набора параметров
+
+\begin{tabular}{c|c|c c c c}
+  $A_0$ & & & & & \\
+  $A_1$ & $\alpha_1$ & $\beta_{10}$ & & & \\
+  $A_2$ & $\alpha_2$ & $\beta_{20}$ & $\beta_{21}$ & & \\
+  $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & \\
+  $A_q$ & $\alpha_q$ & $\beta_{q0}$ & $\beta_{q1}$ & $\ldots$ & $\beta_{qq-1}$
+\end{tabular}
+
+При помощи параметров $\alpha$ и $\beta$ последовательно находим
+\begin{equation}
+  \label{19-alpha-beta}
+  \begin{split}
+    &\phi_0 = h f(x_n, y_n)\\
+    &\phi_1 = h f(x_n + \alpha_1 h, y_n + \beta_{10}\phi_0)\\
+    &\ldots\\
+    &\phi_q = h f(x_n + \alpha_q h, y_n + \sum\limits_{j = 0}^{q - 1}
+    \beta_{qj}\phi_j)
+  \end{split}
+\end{equation}
+
+Параметры $\phi_0, \phi_1, \ldots \phi_q$ находится последовательно. После этого
+интеграл в \eqref{19-integral} заменяется на $\sum\limits_{i = 0}^qA_i\phi_i$.
+В результате получим формулу
+\begin{equation}
+  \label{19-int-approx}
+  y_{n + 1} = y_n + \sum\limits_{i = 0}^qA_i\phi_i
+\end{equation}
+
+Неизвестные параметры $A, \alpha, \beta$ выбираются таким образом, чтобы при
+заданном значении $q$ построить метод максимально высокого порядка точности.
+
+\begin{definition}
+  Формулы \eqref{19-alpha-beta}, \eqref{19-int-approx} - метод Рунге-Кутты.
+\end{definition}
+
+Локальная погрешность
+\begin{equation}
+  r_q(h) = u(x_n + h) - u(x_n) - \sum\limits_{i = 0}^qA_i\phi_i
+\end{equation}
+
+Считая функцию $f$ достаточно гладной, запишем разложение в ряд Тейлора
+\begin{equation}
+  r_q(h) = \sum\limits_{j = 0}^k\dfrac{h^j}{j!}r_q^{(j)}(0) + O(h^{k + 1})
+\end{equation}
+
+Если параметры $A, \alpha, \beta$ выбрать таким образом, чтобы производные
+\begin{equation}
+  \label{19-precision}
+  r_q^{(j)} = 0, \forall j = \overline{0, k}
+\end{equation}
+то метод будет иметь $k$-ый порядок погрешности.
+
+\begin{examples}
+  \item $q = 0$.
+  \begin{align*}
+    &r_0(h) = u(x_n + h) - u(x_n) - hA_0f_n\\
+    &r_0'(h) = u'(x_n + h) - A_0f_n\\
+    &r_0''(h) = u''(x_n + h)
+  \end{align*}
+  Условие \eqref{19-precision} выполняется, когда $A_0 = 1, j = \overline{0, 1}$.
+  \begin{align*}
+    &y_{n + 1} = y_n + hf_n\\
+    &u'(x_n) = f_n
+  \end{align*}
+  В итоге приходим к формуле явного метода Эйлера - метода первого порядка
+  точности.
+  \item $q = 1$.
+  \begin{equation}
+    \label{19-coef1}
+    u_{n + 1} - u_n = hf_n + \dfrac{h^2}{2}(f_x + ff_u)_n +
+    \dfrac{h^3}{6}(f_{xx} + 2ff_{xu} + f^2f_{uu} + f(f_x + ff_u))_n + O(h^4)
+  \end{equation}
+  \begin{equation}
+    \label{19-coef2}
+    \begin{split}
+      &A_0\phi_0 + A_1\phi_1 = h(A_0f_n + A_1f(x_n + \alpha_1h, u + h\beta_{10}f_n)) =\\
+      &= h(A_0 + A_1)f_n + h^2A_1(\alpha_1f_x + \beta_{10}ff_u)_n +
+      \dfrac{h^3}{2}A_1(\alpha_1^2f_{xx} + 2\alpha_1\beta_{10}ff_{xu} + \beta_{10}^2
+      f^2f_{uu}) + O(h^4)
+    \end{split}
+  \end{equation}
+  \begin{equation}
+    \label{19-q2}
+    \begin{aligned}
+      &hf: &A_0 + A_1 = 1\\
+      &h^2f_x: &A_1\alpha_1 = \dfrac{1}{2}\\
+      &h^2ff_u: &A_1\beta_{10} = \dfrac{1}{2}
+    \end{aligned}
+  \end{equation}
+  При выполнении условий \eqref{19-q2} нельзя добиться совпадения коэффициентов
+  \eqref{19-coef1} и \eqref{19-coef2} формулы при $h^3$. Поэтому при $q = 1$
+  метод Рунге-Кутты имеет второй порядок точности
+  \begin{equation}
+    \label{19-coef3}
+    \begin{cases}
+      \alpha_1 = \beta_{10} = \dfrac{1}{2A_1}\\
+      A_0 = 1 - A_1
+    \end{cases}
+  \end{equation}
+  Формула \eqref{19-coef3} даёт семейство методов Рунге-Кутты второго порядка
+  точности, где $A_1$ - свободный параметр. Возьмём $A_1 = \dfrac{1}{2}$.
+  \begin{equation}
+    \begin{cases}
+      y_{n + 1} = y_n + \dfrac{\phi_0 + \phi_1}{2}\\
+      \phi_1 = hf(x_n + h, y_n + \phi_0)\\
+      \phi_0 = hf_n
+    \end{cases}
+  \end{equation}
+
+  Если $A_1 = 1$.
+  \begin{equation}
+    \begin{cases}
+      y_{n + 1} = y_n + \phi_1\\
+      \phi_1 = hf\left(x_n + \dfrac{h}{2}, y_n + \dfrac{\phi_0}{2}\right)\\
+      \phi_0 = hf_n
+    \end{cases}
+  \end{equation}
+\end{examples}
