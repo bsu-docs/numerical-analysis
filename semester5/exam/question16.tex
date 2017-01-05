@@ -6,6 +6,120 @@
 
 \colquestion{Методы Эйлера, трапеций, средней точки}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+\begin{equation}
+  \label{16-problem}
+  \begin{cases}
+    u' = f(x, u)\\
+    u(x_0) = u_0.
+  \end{cases}
+\end{equation}
+
+Проинтегрируем \eqref{16-problem} на отрезке $[x_n, x_{n + 1}], x_{n + 1} - x_n = h$.
+
+\begin{equation}
+  \label{16-problem-integral}
+  u_{n + 1} = u_n + \int\limits_{x_n}^{x_{n + 1}}f(t, u(t))dt, u_n \equiv u(x_n)
+\end{equation}
+
+Используем для вычисления интеграла в формуле \eqref{16-problem-integral}
+правило левых прямоугольников
+\begin{align*}
+  \int\limits_A^Bfdx \approx f(A)(B - A)
+\end{align*}
+
+\begin{equation}
+  \label{16-left-rects}
+  u_{n + 1} = u_n + hf_n + R_2(f)
+\end{equation}
+
+Отбрасывая в \eqref{16-left-rects} $R_2(f)$, получаем
+\textbf{явную фомрулу Эйлера}
+\begin{equation}
+  y_{n + 1} = y_n + hf(x_n, y_n) = y_n + hf_n
+\end{equation}
+
+Если для вычисления интеграла в формуле \eqref{16-problem-integral} применить
+формулу правых прямоугольников
+\begin{align*}
+  \int\limits_A^Bfdx \approx f(B)(B - A)
+\end{align*}
+
+получим \textbf{неявную формулу Эйлера}
+\begin{equation}
+  y_{n + 1} = y_n + hf(x_{n + 1, y_{n + 1}}) = y_n + hf_{n + 1}
+\end{equation}
+
+В общем случае неявный метод Эйлера представляет собой неявное уравнение
+отностельно искомого значения $y_{n + 1}$. Для решеня неявного уравнения можно
+использовать итерационный метод (например метод простой итерации).
+
+\begin{equation}
+  y_{n + 1}^{k + 1} = y_n + hf(x_{n + 1}, y_{n + 1}^k), k = 0, 1, \ldots;
+  n = \overline{0, N - 1}.
+\end{equation}
+
+Чтобы итерационный метод сходился, достаточно потребовать, чтобы
+\begin{equation}
+  h\abs{\dfrac{\delta f}{\delta y_{n + 1}}} < 1, \forall n
+\end{equation}
+
+В качестве нулевого приближения возьмём:
+\begin{enumerate}
+  \item $y_{n + 1}^0 = y_n$
+  \item $y_{n + 1}^0 = y_n + hf_n$
+\end{enumerate}
+
+Локальная погрешность явного и неявного метода Эйлера (это погрешность
+нахождения $u(x + h)$ при известном значении $u(x)$) имеет порядок $O(h^2)$.
+
+Рассмотрим для неявного метода Эйлера:
+\begin{equation}
+  \begin{split}
+    r_{n + 1} &= u(x_n + h) - u(x_n) - hf(x_{n} + h, u(x_n + h)) =\\
+    &=u_n + hu'_n + \dfrac{h^2}{2}u''_n + O(h^3) - u_n - h(u'_n + hu''_n + O(h^2))=\\
+    &= -\dfrac{h^2}{2}u''_n + O(h^3) = O(h^2)
+  \end{split}
+\end{equation}
+
+Неявный метод Эйлера сложнее в реализации, но имеет значительное преимущество
+перед явным за счёт своей устойчивости.
+
+Если интеграл в правой части вычислить по формуле трапеций, то получим:
+\begin{equation}
+  \begin{split}
+    \begin{cases}
+      y_{n + 1} = y_n + \dfrac{h}{2}(f_n + f_{n + 1})\\
+      y_0 = u_0, n = 0, 1, \ldots
+    \end{cases}
+    r_{n + 1} = O(h^3)
+  \end{split}
+\end{equation}
+
+Применим для вычисления \eqref{16-problem-integral} правило средних
+прямоугольников (формулу средней точки)
+\begin{equation}
+  \label{16-med-point}
+  y_{n + 1} = y_n + hf_{n + \frac{1}{2}}; y_0 = u_0, n = 0, 1, \ldots
+\end{equation}
+
+Чтобы вычислить $f_{n + \frac{1}{2}}$ необходимо знать значение
+$y_{n + \frac{1}{2}}$. Способы вычисления:
+\begin{equation}
+  \label{16-half1}
+  y_{n + \frac{1}{2}} \approx \frac{1}{2}(y_n + y_{n + 1})
+\end{equation}
+\begin{equation}
+  \label{16-half2}
+  y_{n + \frac{1}{2}} = y_n + \frac{h}{2}f_n
+\end{equation}
+
+Если применять \eqref{16-med-point} и \eqref{16-half1}, то получим
+\begin{equation}
+  y_{n + 1} = y_n + hf\left(x_n + \frac{h}{2}, \frac{1}{2}(y_n + y_{n + 1})
+  \right)
+\end{equation}
+
+Если применять \eqref{16-med-point} и \eqref{16-half2}, то получим
+\begin{equation}
+  y_{n + 1} = y_n + hf\left(x_n + \frac{h}{2}, y_n + \frac{1}{2}f_n\right)
+\end{equation}
