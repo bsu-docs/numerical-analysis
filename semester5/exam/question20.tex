@@ -6,6 +6,109 @@
 
 \colquestion{Экстраполяционные методы Адамса}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+Данный метод относится к многошаговым, которые имеют следующий вид
+\begin{equation}
+  \label{20-method}
+  y_{n + 1} = y_n + h\sum\limits_{i = 0}^qA_if_{n - i}
+\end{equation}
+
+Неизвестные параметры $A_i$ можно определить также, как и при построении методов
+последовательного повышения порядка точности, т.е. из системы
+\begin{equation}
+  \label{20-system}
+  \sum\limits_{i = 0}^qA_i(-i)^j = \dfrac{1}{j + 1}, j = \overline{0, q}
+\end{equation}
+
+Система \eqref{20-system} имеет единственное решение.
+
+Погрешность явного метода Адамса можно также получить из формулы для метода
+последовательного повышения порядка точности
+\begin{equation}
+  r_{n + 1} = h^{q + 2}u_n^{(q + 2)}\left(\dfrac{1}{(q + 2)!} -
+  \dfrac{1}{(q + 1)!}\sum\limits_{i = 0}^qA_i(-i)^{q + 1}\right) + O(h^{q + 3})
+  = O(h^{q + 2})
+\end{equation}
+
+Параметры $A_i$ можно построить, не решая систему \eqref{20-system}. Рассмотрим
+интегральное уравнение (получено интегрированием исходного уравнения на $[0, 1]$)
+\begin{equation}
+  \label{20-int-eq}
+  u_{n + 1} = u_n + h\int\limits_0^1f_{n + \alpha}d\alpha
+\end{equation}
+
+Подинтегральную функцию $f$ можно заменить интерполяционным полиномом,
+построенным по точкам $0, -1, \ldots -q$. Поскольку узлы интерполирования
+$x_n, \ldots x_{n - q}$ (или $\alpha = 0, -1, \ldots -q$) располагаются вне
+отрезка $[x_n, x_{n + h}]$, то такая процедура интерполирования называется
+\textbf{экстраполированием}.
+
+Если интерполяционный полином взять в форме Лагранжа, то коэффициенты $A_i$
+находятся по формуле
+\begin{equation}
+  A_i = \dfrac{(-1)^i}{i! (q - i)!}\int\limits_0^1
+  \dfrac{\alpha(\alpha + 1)\ldots(\alpha + q)}{\alpha + i}d\alpha, i = \overline{0, q}
+\end{equation}
+
+Для организации счёта по формуле \eqref{20-method} одного известного условия
+$y_0 = u_0$ не достаточно. Необходимо также задать значения $y_1, \ldots y_q$ с
+той же точностью, которую имеет метод Адамса. Эти начальные значения находят
+по одношаговым методам (например Рунге-Кутта). Эти одношаговые методы называются
+стартовыми.
+
+\begin{examples}
+  \item $q = 0, A_0 = 1$.
+  \begin{equation}
+    y_{n + 1} = y_n + hf_n
+  \end{equation}
+  совпадает с явным методом Эйлера.
+  \item $q = 1, A_0 + A_1 = 1, A_1 = \dfrac{1}{2} \Rightarrow A_0 = \dfrac{3}{2}$.
+  Получаем метод Адамса второго порядка точности
+  \begin{equation}
+    \begin{split}
+      &y_{n + 1} = y_n + \dfrac{h}{2}(3f_n - f_{n - 1})\\
+      &y_0 = u_0
+    \end{split}
+  \end{equation}
+  Получился явный двухшаговый метод. $y_1$ необходимо посчитать по формуле
+  Рунге-Кутты.
+
+  Локальная погрешность
+  \begin{align*}
+    r_{n + 1} = \dfrac{5}{12}h^3u_n^{(3)} + O(h^4) = O(h^3)
+  \end{align*}
+
+  \item $q = 2$.
+  \begin{align*}
+    \begin{cases}
+      A_0 + A_1 + A_2 = 1\\
+      A_1 + 2A_2 = -\dfrac{1}{2}
+      A_1 + 4A_2 = -\dfrac{1}{3}
+    \end{cases}\\
+    A_0 = \dfrac{23}{12}, A_1 = -\dfrac{4}{3}, A_2 = \dfrac{5}{2}
+  \end{align*}
+  \begin{equation}
+    \begin{split}
+      y_{n + 1} = y_n + \dfrac{h}{12}(23f_n - 16f_{n - 1} + 5f_{n - 2})\\
+      y_0 = u_0
+    \end{split}
+  \end{equation}
+  Получился трёхшаговый метод.
+\end{examples}
+
+Если подынтегральную функцию в \eqref{20-int-eq} аппроскимировать интерполяционным
+полиномом в форме Ньютона, то экстраполяционный метод Адомса примет вид
+\begin{equation}
+  \begin{split}
+    &y_{n + 1} = y_n + \phi_n + \dfrac{1}{2}\Delta \phi_{n - 1} +
+    \dfrac{5}{12}\Delta^2\phi_{n - 2} + \ldots + C_q\Delta^q\phi_{n - q}\\
+    &\phi_i = h f_i, C_q = \dfrac{1}{q!}\int\limits_0^1\alpha(\alpha + 1) \ldots
+    (\alpha + q - 1)d\alpha\\
+    &\Delta \text{ - оператор конечной разности}\\
+    & \Delta \phi_{n - 1} = \phi_n - \phi_{n - 1}
+  \end{split}
+\end{equation}
+
+Погрешность
+\begin{equation}
+  r_{n + 1} = h^{q + 2}u_n^{(q + 2)}C_{q + 1} + O(h^{q + 3}) = O(h^{q + 2})
+\end{equation}
