@@ -6,6 +6,89 @@
 
 \colquestion{Усточивость линейных многошаговых методов}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+Будем рассматривать заадчу Коши
+\begin{equation}
+  \begin{cases}
+    u' = f(x, u), x > 0\\
+    u(0) = u_0
+  \end{cases}
+\end{equation}
+
+Возьмём равномерную сетку узлов $\omega_h = \set{x_n = nh, n = 0, 1, \ldots}$.
+Будем рассматривать линейный $m$-шаговый метод.
+\begin{align}
+  \label{22-multistep}
+  &a_0y_n + a_1y_{n - 1} + \ldots + a_my_{n - m} = h\sum\limits_{k = 0}^mb_kf_{n-k}\\
+  \nonumber
+  &n = m, m + 1, \ldots
+\end{align}
+
+Коэфициенты $a_k, b_k = \const, a_0 \neq 0$. Для счёта по формуле \eqref{22-multistep}
+необходимо задать $m$ начальных значений $y_0 = u_0, y_1, \ldots y_{m - 1}$. Обычно они
+находятся с помощью одношагового метода Рунге-Кутты того же порядка точности, что и метод
+\eqref{22-multistep}.
+
+Запишем соответствующее однородное уравнение
+\begin{align}
+  \label{22-le}
+  &a_0\delta_n + a_1\delta_{n - 1} + \ldots + a_m\delta_{n - m} = 0\\
+  \nonumber
+  &n = m, m + 1, \ldots
+\end{align}
+
+Будем искать частные решения \eqref{22-le} в виде $\delta_n = q^n, q = \const$, тогда для
+опредления постоянной $q$ получим уравнение
+\begin{equation}
+  \label{22-char}
+  a_0q^m + a_1q^{m - 1} + \ldots + a_m = 0
+\end{equation}
+
+\begin{definition}
+  Уравнение \eqref{22-char} - характеристическое уравнение метода \eqref{22-multistep}.
+\end{definition}
+
+\begin{definition}
+  \eqref{22-multistep} - линейный двухшаговый метод, удовлетворяет условию корней, если
+  все корни $q_1, \ldots q-m$ характеристического уравнения \eqref{22-char} лежат внутри
+  или на границе единичного круга комплексной плоскости. Причём на границе этого круга нет
+  кратных корней.
+\end{definition}
+
+\begin{definition}
+  Однородное уравнение \eqref{22-le} устойчиво по начальным данным, если $\exists \const
+  M > 0$, независящая от номера узла $n$, такая, что при любых начальных данных
+  $\delta_0, \ldots \delta_{m - 1}$ выполняется следующая оценка решения
+\end{definition}
+\begin{equation}
+  \label{22-approx}
+  \abs{\delta_n} \leqslant M \underset{0 \leqslant i \leqslant m - 1}{\max}\abs{\delta_i},
+  n = m, m + 1, \ldots
+\end{equation}
+
+Таким образом устойчивость по начальным данным означает равномерную по $n$ ограниченность
+решения задачи Коши.
+
+\begin{theorem}
+  Условие корней необходимо и достаточно для устойчивости метода \eqref{22-le} по
+  начальным данным.
+\end{theorem}
+\begin{proof}
+  
+  \begin{enumerate}
+    \item $\Rightarrow$. Пусть имеется корень $\abs{q} > 1$. Зададим начальные данные
+    $\delta_i = q^i (i = \overline{0, m - 1})$. Тогда уравнение \eqref{22-le} имеет решение
+    в точке $\delta_n = q^n(n \geqslant m)$, которое неограничено возрастает при
+    $n \to \infty$. Оценка \eqref{22-approx} не выполняется.
+
+    Следовательно, условие $\abs{q_k} \leqslant 1, k = \overline{1, m}$ - необходимое
+    условие устойчивости. Пусть характеристическое уравнение \eqref{22-char} имеет корень
+    $q$ с кратностью $r > 1$, причём этот корень находится на границе единичного круга на
+    комплексной плоскости $\abs{q} = 1$. В этом случае однородное уравнение \eqref{22-le}
+    имеет решение вида
+    \begin{align*}
+      \delta_n = q^n\cdot n^{r - 1}
+    \end{align*}
+    и оценка \eqref{22-approx} снова не выполняется.
+    \item $\Leftarrow$. Без доказательства.
+  \end{enumerate}
+\end{proof}
