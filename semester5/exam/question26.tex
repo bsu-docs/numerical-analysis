@@ -6,6 +6,45 @@
 
 \colquestion{Разностные схемы повышенного порядка аппроксимации}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+Если коэффициенты и решение дифференциальной азадчи являются достаточно гладкими функциями,
+то можно строить разностные схемы повышенного порядка аппроксимации
+\begin{equation}
+  Lu = -u''(x) = f(x)
+\end{equation}
+
+Первая возможность построения разностной схемы повышенного порядка связана с использванием
+расширенного шаблона. Например, вместо минимального трёхточечного шаблона можно использовать
+пятиточечный шаблон следующего вида
+\begin{align}
+  &\Lambda_u = -\dfrac{1}{12h^2}\left(-u_{i - 2} + 15u_{i - 1} - 30u_i + 16u_{i + 1}
+  - u_{i + 2}\right)\\
+  &\psi = Lu - \Lambda u = O(h^4)
+\end{align}
+
+Вторая возможность потсроения разностной схемы повышенного порядка аппроксимации: можно
+получить без расширения шаблона засчёт использования компактных аппроксимаций
+\begin{align}
+  \label{26-taylor1}
+  &u_{\overline{x}x} = u'' + \dfrac{h^2}{12}u^{(4)} + O(h^4)\\
+  \label{26-taylor2}
+  &u_{\overline{x}x} = \dfrac{1}{h^2}(u_{i + 1} - 2u_i + u_{i - 1}) = u'' + O(h^2)\\
+  \label{26-taylor3}
+  &\eqref{26-taylor1}, \eqref{26-taylor2} \Rightarrow
+  u_{\overline{x}x} = u'' + \dfrac{h^2}{12}u''_{xx} + O(h^4)\\
+  \label{26-diff}
+  &\Delta u_i \equiv u_{i + 1} - 2u_i + u_{i - 1}\\
+  \label{26-frac}
+  &\eqref{26-taylor3}, \eqref{26-diff} \Rightarrow \dfrac{\Delta u_i}{h^2} =
+  \left(1 + \dfrac{\Delta}{12}\right)u_i''\\
+  \label{26-diff-approx}
+  &u_i'' = \dfrac{1}{h^2}\left(1 + \dfrac{\Delta}{12}\right)^{-1}\Delta u_i
+\end{align}
+
+Формула \eqref{26-diff-approx} представляет собой неявную аппроксимацию второй
+производной. Формулу \eqref{26-frac} можно записать в виде
+\begin{equation}
+  \Lambda u = -u_{\overline{x}x}, \phi = \dfrac{1}{12}\left(f(x_i - h) +
+  10f(x_i) + f(x_i + h)\right)
+\end{equation}
+
+TODO: Способ повышения порядка аппроксимации на решении исходного ду.
