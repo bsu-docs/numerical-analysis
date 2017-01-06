@@ -63,8 +63,8 @@ $[x_{i - \frac{1}{2}}, x_{i + \frac{1}{2}}]$. Величина $q_{i - \frac{1}{
 Интегрируем \eqref{25-diff} на $[x_{i - 1}, x_i]$
 \begin{equation}
   \label{25-int2}
-  u_i - u_{i - 1} = \int\limits_{x_{i - 1}}^{x_i}\dfrac{q}{k}dx =
-  q_{i - \frac{1}{2}}\int\limits_{x_{i - 1}}^{x_i}\dfrac{dx}{k}
+  u_i - u_{i - 1} = -\int\limits_{x_{i - 1}}^{x_i}\dfrac{q}{k}dx =
+  -q_{i - \frac{1}{2}}\int\limits_{x_{i - 1}}^{x_i}\dfrac{dx}{k}
 \end{equation}
 
 Введём обозначение
@@ -91,7 +91,7 @@ $[x_{i - \frac{1}{2}}, x_{i + \frac{1}{2}}]$. Величина $q_{i - \frac{1}{
 Подставляем \eqref{25-q} в \eqref{25-int}, получим
 \begin{align}
   &-(au_{\overline{x}})_x = \phi\\
-  \phi = \dfrac{1}{h}\int\limits_{x_{i - 1}}^{x_i}fdx\\
+  &\phi = \dfrac{1}{h}\int\limits_{x_{i - 1}}^{x_i}fdx
 \end{align}
 
 На правой границе было условие Дирихле
