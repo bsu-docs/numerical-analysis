@@ -73,17 +73,18 @@
   начальным данным.
 \end{theorem}
 \begin{proof}
-  
+
   \begin{enumerate}
     \item $\Rightarrow$. Пусть имеется корень $\abs{q} > 1$. Зададим начальные данные
-    $\delta_i = q^i (i = \overline{0, m - 1})$. Тогда уравнение \eqref{22-le} имеет решение
-    в точке $\delta_n = q^n(n \geqslant m)$, которое неограничено возрастает при
+    $\delta_i = q^i (i = \overline{0, m - 1})$. Тогда уравнение \eqref{22-le} имеет
+    решение в точке $\delta_n = q^n(n \geqslant m)$, которое неограничено возрастает при
     $n \to \infty$. Оценка \eqref{22-approx} не выполняется.
 
     Следовательно, условие $\abs{q_k} \leqslant 1, k = \overline{1, m}$ - необходимое
     условие устойчивости. Пусть характеристическое уравнение \eqref{22-char} имеет корень
     $q$ с кратностью $r > 1$, причём этот корень находится на границе единичного круга на
-    комплексной плоскости $\abs{q} = 1$. В этом случае однородное уравнение \eqref{22-le}
+    комплексной плоскости $\abs{q} = 1$. В этом случае однородное уравнение
+    \eqref{22-le}
     имеет решение вида
     \begin{align*}
       \delta_n = q^n\cdot n^{r - 1}
@@ -92,3 +93,17 @@
     \item $\Leftarrow$. Без доказательства.
   \end{enumerate}
 \end{proof}
+
+Можно показать, что если уравнение \eqref{22-le} устойчиво по начальным данным, то для
+неоднородного случая
+\begin{equation}
+  \label{22-nonuniform}
+  a_0y_n + a_1y_{n - 1} + \ldots + a_my_{n - m} = hg_{n - m}, n = m, m + 1, \ldots
+\end{equation}
+выполняется оценка
+\begin{equation}
+  \abs{y_n} \leqslant M_1\underset{1 \leqslant j \leqslant m}{\abs{y_j}} +
+  M_2\sum\limits_{k = 0}^{n - m}h\abs{g_k}
+\end{equation}
+которая означает устойчивость \eqref{22-nonuniform} по правой части и по начальным
+данным.
