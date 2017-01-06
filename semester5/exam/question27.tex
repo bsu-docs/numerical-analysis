@@ -6,6 +6,143 @@
 
 \colquestion{Разностные схемы для уравнения Пуассона}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+Будем рассматривать задачу Дирихле для двумерного уравнения диффузии
+\begin{align}
+  \label{27-problem}
+  &Lu = f(x), x = (x_1, x_2) \in \Omega\\
+  \label{27-border}
+  &u(x) = -g(x), x \in \sigma\Omega\\
+  &Lu = \sum\limits_{\alpha = 1}^2L_{\alpha}u, L_{\alpha}u = -\dfrac{\partial}
+  {\partial x_{\alpha}}\left(k(x)\dfrac{\partial u}{\partial x_{\alpha}}\right)
+\end{align}
+
+\begin{align*}
+  \Omega = \set{x | x = (x_1, x_2), 0 \leqslant x_{\alpha} \leqslant l_{\alpha},
+  \alpha = 1, 2}
+\end{align*}
+
+Поставим в соответствие разностную схему
+\begin{align}
+  \label{27-scheme1}
+  &\Lambda y = \phi(x), x \in \omega, \omega \text{ - множество узлов}\\
+  &y(x) = g(x), x \in \sigma\Omega\\
+  \label{27-scheme2}
+  &\Lambda y = \sum\limits_{\alpha = 1}^2\Lambda_{\alpha}y, \Lambda_{\alpha}y
+  = -(a_{\alpha}y_{\overline{x}_{\alpha}})x_{\alpha}\\
+  \nonumber
+  &\overline{\omega} = \set{x | x = x_{ij} = (ih_1, jh_2), i = \overline{0, N_1},
+  j = \overline{0, N_2}, h_1N_1 = l_1, h_2N_2 = l_2}
+\end{align}
+
+\begin{equation}
+  \begin{split}
+    &a_1(x_1, x_2) = k(x_1 - 0.5h_1, x_2)\\
+    &a_2(x_1, x_2) = k(x_1, x_2 - 0.5h_2)
+  \end{split}
+\end{equation}
+
+Если коэффициенты $k(x)$ и решение задачи \eqref{27-problem} - \eqref{27-border} являются
+гладкими функциями, то схема \eqref{27-scheme1} - \eqref{27-scheme2} имеет второй порядок
+аппроксимации $O(h_1^2 + h_2^2)$.
+
+Рассмотрим оператор $Lu$ в \eqref{27-problem}, который содержит смешанные производные
+\begin{equation}
+  Lu = \sum\limits_{\alpha, \beta = 1}^{2}L_{\alpha, \beta}u = -\dfrac{\partial}
+  {\partial x}\left(k_{\alpha\beta}(x)\dfrac{\partial u}{\partial x_{\beta}}\right)
+\end{equation}
+
+\begin{align*}
+  \Lambda y = \sum\limits_{\alpha, \beta = 1}^2\Lambda_{\alpha\beta}y
+\end{align*}
+\begin{align}
+  &\Lambda_{\alpha\beta}y = -\dfrac{1}{2}((k_{\alpha\beta y_{\overline{x}\beta}})_
+  {x_{\alpha}} + (k_{\alpha\beta}y_{x\beta})_{\overline{x}_{\alpha}})\\
+  &\Lambda_{\alpha\beta} = \dfrac{1}{2}\left(\Lambda_{\alpha\beta}^- +
+  \Lambda_{\alpha\beta}^+\right);
+  \Lambda_{\alpha\beta}^- = -(k_{\alpha\beta y_{\overline{x}\beta}})_{x_{\alpha}},
+  \Lambda_{\alpha\beta}^+ = (k_{\alpha\beta}y_{x\beta})_{\overline{x}_{\alpha}})
+\end{align}
+
+$\Lambda_{\alpha\beta}^- + \Lambda_{\alpha\beta}^+$ имеют первый порядок
+аппроксимации.
+
+\begin{equation}
+  \begin{split}
+    &\Lambda_{11}y = -\dfrac{1}{2}((k_{11}y_{\overline{x_1}})_{x_1} +
+    (k_{11}y_{x_1})_{\overline{x_1}}) = -(a_{11}y_{\overline{x_1}})_{x_1}\\
+    &\Lambda_{2}y = -\dfrac{1}{2}((k_{2}y_{\overline{x_2}})_{x_2} +
+    (k_{22}y_{x_2})_{\overline{x_2}}) = -(a_{22}y_{\overline{x_2}})_{x_2}
+  \end{split}
+\end{equation}
+
+\begin{equation}
+  \begin{split}
+    &a_{11}(x_1, x_2) = \dfrac{1}{2}(k_{11}(x_1 - h_1, x_2) + k_{11}(x_1, x_2))\\
+    &x_{22}(x_1, x_2) = \dfrac{1}{2}(k_{22}(x_1, x_2 - h_2) + k_{22}(x_1, x_2))
+  \end{split}
+\end{equation}
+\begin{align*}
+  \Lambda_{\alpha\alpha}u - L_{\alpha\alpha}u = O(\abs{h}^2) = O(h_1^2 + h_2^2)
+  = O(h^2) \text{ - погрешность}
+\end{align*}
+
+С разными индексами:
+\begin{align}
+  &\Lambda_{12}^-y = -(k_{12}y_{\overline{x_2}})_{x_1}\\
+  \label{27-diff-left}
+  &u_{\overline{x_2}} = \dfrac{\partial u}{\partial x_2} - \dfrac{h_2}{2}
+  \dfrac{\partial^2 u}{\partial x_2^2} + O(h_2^2) \text{ - левая разностная
+  производная}\\
+  \label{27-diff-right}
+  &\delta_{x_1} = \dfrac{\partial \delta}{\partial x_1} + \dfrac{h_1}{2}
+  \dfrac{\partial^2 \delta}{\partial x_1^2} + O(h_1^2) \text{ - правая разностная
+  производная}
+\end{align}
+
+В качестве $\delta = k_{12}u_{\overline{x_2}}$. Подставим \eqref{27-diff-left} в
+\eqref{27-diff-right}
+\begin{align}
+  \label{27-approx1}
+  &\Lambda_{12}^-u = L_{12}u + \dfrac{h_1}{2}\dfrac{\partial}{\partial x_1}L){12}u
+  - \dfrac{h_1}{2}\dfrac{\partial}{\partial x_2}L_{12}u + O(h^2)\\
+  \label{27-approx2}
+  &\Lambda_{12}^+u = L_{12}u - \dfrac{h_1}{2}\dfrac{\partial}{\partial x_1}L){12}u
+  + \dfrac{h_1}{2}\dfrac{\partial}{\partial x_2}L_{12}u + O(h^2)\\
+  &\eqref{27-approx1}, \eqref{27-approx2} \Rightarrow \Lambda_{12} - L_{12}u = O(h^2)
+\end{align}
+
+\begin{note}
+  Вместо семиточечного шаблона можно использовать другой шаблон
+  \begin{align*}
+    \Lambda_{\alpha\beta}y = -\dfrac{1}{2}((k_{\alpha\beta y_{x\beta}})_
+    {x_{\alpha}} + (k_{\alpha\beta}y_{\overline{x}\beta})_{\overline{x}_{\alpha}})
+  \end{align*}
+\end{note}
+
+Рассмотрим оператор $\Lambda$, когда $k(x) = 1$:
+\begin{align}
+  \label{27-op1}
+  &\Lambda u = Lu - \dfrac{h_1^2}{12}L_1^2u - \dfrac{h_2^2}{12}L_2^2u + O(h^2)\\
+  \label{27-op2}
+  &L_1^2u = L_1f - L_1L_2u;\qquad L_2^2u = L_2f - L_1L_2u
+\end{align}
+
+Подставляем \eqref{27-op2} в \eqref{27-op1}, получаем
+\begin{equation}
+  \Lambda u = Lu - \dfrac{h_1^2}{12}L_1f - \dfrac{h_2^2}{12}L_2f +
+  \dfrac{1}{12}(h_1^2 + h_2^2)L_1L_2u + O(h^4)
+\end{equation}
+
+Заменяя $L_1L_2u$ разностным выражением получаем
+\begin{align}
+  &L_1L_2u \approx \Lambda_1\Lambda_2 u = u_{\overline{x_1}x_1\overline{x_2}x_2}\\
+  \label{27-puasson1}
+  &\Lambda_1y + \Lambda_2y - \dfrac{1}{12}(h_1^2 + h_2^2)\Lambda_1\Lambda_2y = \phi(x)\\
+  \label{27-puasson2}
+  &\phi(x) = f(x) + \dfrac{1}{12}h_1^2f_{\overline{x_1}x_1} + \dfrac{1}{12}h_2^2
+  f_{\overline{x_2}x_2}
+\end{align}
+
+\eqref{27-puasson1}, \eqref{27-puasson2} аппроксимирует уравнение Пуассона на решении
+с четвёртым порядком аппроксимации. ${u \in C^6(\Omega), f \in C^4(\Omega)}$ - гладкие
+функции.
