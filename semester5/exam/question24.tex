@@ -6,6 +6,131 @@
 
 \colquestion{Основные понятия теории разностных схем}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+Сеточные (разностные) методы основаны на переходе от функций непрерывного аргумента к
+функциям дискретного аргумента. Например, если на отрезке $[0, 1]$ ввести точки-узлы
+$x_i$, которые образуют множество
+\begin{equation*}
+  \omega_h = \set{x_i = ih, i = \overline{0, h}, nh = l}, h \text{ - шаг сетки}
+\end{equation*}
+то приближённое решение ищется в узлах сетки $\omega_h$ и обозначается $y_h(x_i),
+i = \overline{0, n}$ ($y_n$ - функция дискретного аргумента).
+
+Для нахождения этой сеточной функции формулируется разностная задача. Запишем её в
+операторном виде
+\begin{equation}
+  \label{24-op}
+  Lu = F
+\end{equation}
+где $u$ - искомая функция, $F$ - вектор правой части, содержащий входные данные задачи.
+
+Например, рассмотрим задачу Коши
+\begin{equation}
+  \begin{cases}
+    u' = f(x, u)\\
+    u(0) = u_0
+  \end{cases}
+\end{equation}
+соответствующая разностная задача записывается в следующем виде
+\begin{equation}
+  Lu = \begin{cases}
+    u' - f, x > 0\\
+    u(0), x = 0
+  \end{cases}
+  F = \begin{cases}
+    0, x > 0\\
+    u_0, x = 0
+  \end{cases}
+\end{equation}
+
+Одна из аппроксимирующих эту задачу разностных схем имеет вид
+\begin{equation}
+  \begin{cases}
+    \dfrac{y_{i + 1} - y_i}{h} = f_i, i = \overline{0, n - 1}\\
+    y_0 = u_0
+  \end{cases}
+\end{equation}
+Операторная форма записи
+\begin{align}
+  \label{24-diff}
+  &\Lambda_hy_n = \phi_h \text{ - в общем случае}\\
+  &\Lambda_hy_n = \begin{cases}
+    \dfrac{y_{i + 1} - y_i}{h}\\
+    y_0
+  \end{cases}
+  \phi_h = \begin{cases}
+    f_i\\
+    u_0
+  \end{cases}
+\end{align}
+
+Введём норму сеточной функции
+\begin{equation}
+  \abs{\abs{y_n}}_h = \underset{0 \leqslant i \leqslant n}{\max}\abs{y_i}
+\end{equation}
+
+\begin{definition}
+  Решение разностной задачи \eqref{24-diff} сводится при $h \to 0$ к решению исходной
+  задачи \eqref{24-op}, если
+  \begin{equation}
+    \norm{(u)_h - y_h}_h \to 0
+  \end{equation}
+\end{definition}
+$(u)_h$ означает некоторую проекцию точного решения $u$ на сетку $\omega_h$. Самая
+простая проекция: $u_i$. Если
+\begin{equation}
+  \norm{(u)_h - y_h}_h \leqslant ch^p,
+\end{equation}
+где $c = \const$, не зависит от $h$, то имеет место сходимость порядка $p$.
+
+\begin{definition}
+  Задача \eqref{24-diff} аппроксимирует исходную задачу \eqref{24-op} на её решение,
+  если невязка
+  \begin{equation}
+    \norm{\psi_h}_h \xrightarrow[h \to 0]{} 0
+  \end{equation}
+\end{definition}
+\begin{align*}
+  \psi_h = \Lambda_h(u)_h - \phi_h
+\end{align*}
+
+Если при этом имеет место оценка
+\begin{equation}
+  \norm{\psi_h}_h \leqslant C_1h^p,
+\end{equation}
+где $C_1 = \const$ не зависящая от $h$, то схема \eqref{24-diff} имеет порядок
+аппроксимации $p$.
+
+\begin{definition}
+  Разностная схема \eqref{24-diff} называется устойчивой, если для любых достаточно
+  малых $h, z_h$ возмущённая разностная схема
+  \begin{equation}
+    \Lambda_hv_h = \phi_h + z_h
+  \end{equation}
+  однозначно разрешима и $\exists \const c_2 > 0$ не зависящая от $h, \norm{z_h}_h$,
+  такая, что выполняется оценка
+  \begin{equation}
+    \norm{v_h - y_h}_h \leqslant c_2\norm{z_h}_h
+  \end{equation}
+  Другими словами, малые возмущения правой части разностной схемы приводят к равномерно
+  малому по $h$ изменению решения.
+\end{definition}
+
+Поскольку
+\begin{align*}
+  \eqref{24-diff} \Rightarrow y_h = \Lambda_h^{-1}(\phi_h), v_h =
+  \Lambda_h^{-1}(\phi_h + z_h),
+\end{align*}
+то условие устойчивости можно записать следующим образом
+\begin{equation}
+  \label{24-stab}
+  \norm{\Lambda_h^{-1}(\phi_h + z_h) - \Lambda_h^{-1}(\phi_h)}_h \leqslant c_2
+  \norm{z_h}_h
+\end{equation}
+
+\eqref{24-stab} означает непрерывность обратного оператора $\Lambda_h^{-1}$ в точке
+$\phi_h$.
+
+\begin{theorem}[Лакса]
+  Любая устойчивая разностная схема $p$-го порядка аппроксимации на решении является
+  схемой $p$-го порядка сходимости.
+\end{theorem}
