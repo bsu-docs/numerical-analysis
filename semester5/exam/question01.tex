@@ -6,6 +6,86 @@
 
 \colquestion{Интерполяционный многочлен Лагранжа. Оценка погрешности}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+\textit{Интерполяционный многочлен Лагранжа.} \newline
+Будем предполагать, что $f(x_i)$ известна в т. $x_i, i = \overline{0, n} \Rightarrow$ будем рассматривать интерполяционный многочлен $n$-ой степени. 
+
+Надо построить $P_n(x)$, чтобы $P_n(x_i) = f(x_i), i = \overline{0, n}$.
+
+Получаем СЛАУ, которую решать в лоб не будем. Коэффициенты $a_i$ будем искать в виде ЛК $f(x_i)$, т.е. будем искать многочлен $P_n(x)$ в виде:
+\begin{equation*}
+  P_n(x) = \sum\limits_{i = 0}^n l_i (x) f(x_i),
+\end{equation*}
+где $l_i (x)$ - многочлены $n$-ой степени.
+
+Должно выполняться: $P_n (x_k) = f(x_k), k = \overline{0, n},$, подставляем в предыдущее равенство:
+\begin{equation*}
+  P_n (x_k) = f(x_k) = \sum\limits_{i = 0}^n l_i (x_k) f(x_i), k = \overline{0, n}.
+\end{equation*}
+Неравенство выше выполняется, если $l_i (x_k) = \begin{cases} 0, i \ne k, \\ 1, i = k. \end{cases}$
+
+По теореме Виетта:
+\begin{equation*}
+  l_i(x) = (x - x_0) (x - x_1) \ldots (x - x_{i - 1}) (x - x_{i + 1}) \ldots (x - x_n) \cdot C_i.
+\end{equation*}
+
+$C_i$ найдем из условия $l_i (x_i) = 1$.
+
+\begin{equation*}
+  (x_i - x_0) (x_i - x_1) \ldots (x_i - x_{i - 1}) (x_i - x_{i + 1}) \ldots (x_i - x_n) \cdot C_i = 1.
+\end{equation*}
+
+\begin{equation*}
+  C_i = \Big[(x_i - x_0) (x_i - x_1) \ldots (x_i - x_{i - 1}) (x_i - x_{i + 1}) \ldots (x_i - x_n)\Big]^{-1}.
+\end{equation*}
+
+Обозначим через $w(x) = (x - x_0) (x - x_1) \ldots (x - x_n)$.
+
+Легко видеть, что $w^{'}(x_i) = \left.\dfrac{d w(x)}{dx}\right|_{x = x_i} = (x_i - x_0) (x_i - x_1) \ldots (x_i - x_{i - 1}) (x_i - x_{i + 1}) \ldots (x_i - x_n)$.
+
+\begin{equation*}
+  l_i(x) = \dfrac{w(x)}{(x - x_i) w^{'} (x_i)}
+\end{equation*}
+
+\begin{equation*}
+  P_n(x) = \sum\limits_{i=0}^n \dfrac{w(x)}{(x - x_i) w^{'} (x_i)} f(x_i) \text{ - интерполяционный многочлен в форме Лагранжа.}
+\end{equation*}
+
+Какова же разность
+\begin{equation*}
+  f(x) - P_n(x), x \in [a, b], x \ne x_i \text{?}
+\end{equation*}
+
+\textit{Оценка погрешности.} \newline
+Будем рассматривать функцию
+\begin{equation*}
+  \phi(z) = f(z) - P_n(z) - K w(z).
+\end{equation*}
+
+Постоянную $K$ выберем так, чтобы $\phi(x) = 0$.
+
+Возможность такого выбора обусловлена следующим:
+\begin{equation*}
+  K = \dfrac{f(x) - P_n(x)}{w(x)},.
+\end{equation*}
+где деление возможно, т.к. $w(x) \ne 0, x \ne x_i$.
+
+$\phi(z)$ на отрезке $[a, b]$ обращается в ноль $n + 2$ раза при всех $x_i, i = \overline{0, n}$ и кроме того в точке $x$.
+
+Предположим, что $f(x)$ $n+1$ раз непрерывно-дифференцируема на $[a, b]$. Тогда из теоремы Ролля:
+
+\begin{theorem}[Ролля]
+  Если вещественная функция, непрерывная на отрезке $[ a , b ]$ и дифференцируемая на интервале $(a,b)$, принимает на концах отрезка $[a,b]$ одинаковые значения, то на интервале $(a, b)$ найдётся хотя бы одна точка, в которой производная функции равна нулю.
+\end{theorem} $\Rightarrow$
+\begin{enumerate}
+  \item $\phi^{'}(z)$ обращается в ноль $n+1$ раз,
+  \item $\phi^{''}(z)$ обращается в ноль $n$ раз,
+  \item \ldots,
+  \item $\phi^{(n+1)}(z)$ обращается в ноль по крайней мере 1 раз, т.е. $\exists \; \xi \in [a,b] \text{ | } \phi^{(n+1)}(\xi) = 0$.
+\end{enumerate}
+
+\begin{equation*}
+  \phi^{(n+1)}(z) = f^{(n+1)}(z) - K (n + 1)! \Rightarrow K = \dfrac{f^{(n+1)}(\xi)}{(n+1)!}.
+\end{equation*}
+\begin{equation*}
+  0 = f(x) - P_n(x) - \dfrac{f^{(n+1)}(\xi)}{(n+1)!} \cdot w(x) \Rightarrow f(x) - P_n(x) = \dfrac{f^{(n+1)}(\xi)}{(n+1)!} \cdot w(x).
+\end{equation*}
