@@ -10,7 +10,7 @@
 \begin{equation*}
   \begin{cases}
     \Delta x_i = x_{i + 1} - x_i = h \forall \; i, \\
-    \Delta f_i = f_{i+1} - f-i.
+    \Delta f_i = f_{i+1} - f_i.
   \end{cases}
 \end{equation*}
 \begin{equation*}
@@ -51,10 +51,10 @@
   t = \dfrac{x - x_0}{h} \Rightarrow x - x_0 = th, x - x_1 = x - x_0 - h = h(t-1).
 \end{equation*}
 \begin{equation*}
-  P_n(x) = P_n (x_0 + th) = f_0 + \dfrac{f}{1!} \Delta f_0 + \dfrac{t (t-1)}{2!} \Delta^2 f_0 + \ldots + \dfrac{t (t-1) \ldots (t - n + 1)}{n!} \Delta^n f_0.
+  P_n(x) = P_n (x_0 + th) = f_0 + \dfrac{t}{1!} \Delta f_0 + \dfrac{t (t-1)}{2!} \Delta^2 f_0 + \ldots + \dfrac{t (t-1) \ldots (t - n + 1)}{n!} \Delta^n f_0.
 \end{equation*}
 \begin{equation*}
-  P_n(x) = h^{n+1} \dfrac{t(t-1)\ldots(t-n)}{(n+1)!} f^{(n+1)} (\xi).
+  R_n(x) = h^{n+1} \dfrac{t(t-1)\ldots(t-n)}{(n+1)!} f^{(n+1)} (\xi).
 \end{equation*}
 
 Запишем представления раздельных разностей в конце таблицы:
@@ -73,5 +73,5 @@ $\begin{cases}
 \end{equation*}
 
 \begin{equation*}
-  P_n(x) = h^{n+1} \dfrac{t(t+1)\ldots (t+n)}{(n+1)!} f^{(n+1)} (\xi).
+  R_n(x) = h^{n+1} \dfrac{t(t+1)\ldots (t+n)}{(n+1)!} f^{(n+1)} (\xi).
 \end{equation*}
