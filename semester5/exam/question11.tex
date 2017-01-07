@@ -6,6 +6,169 @@
 
 \colquestion{Интерполяционный кубический сплайн}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+Интерполяционным кубическим сплайном называется функция
+\begin{equation*}
+  S(x) = S_i (x) = a_0^{(i)} + a_1^{(i)}(x - x_i) + a_2^{(i)}(x-x_i)^2 + a_3^{(i)} (x - x_i)^3, i = \overline{0, m - 1},
+\end{equation*}
+где $S(x) \in \mathbb{C}^{2} [a, b], x \in [x_i, x_{i + 1}]$.
+
+\begin{equation}\label{eq:11_2}
+  S(x_i) = f(x_i), i = \overline{0, m}.
+\end{equation}
+
+Условия непрерывности сплайна $S(x)$ и ее производных $S^{'}(x), S^{''}(x)$ во внутренних узлах сетки дают $3 (m - 1)$ условия. Условие интерполяции \eqref{eq:11_2} дают еще $m + 1$ условие. Для однозначного определения сплайна $S(x)$ требуется еще $4m$ условий. Недостающие 2 условия определяют из граничных условий.
+
+\textit{Типичные граничные условия}:
+
+Если известны $f^{'}(a), f^{'}(b)$, тогда
+\begin{equation*}
+  \begin{cases} S^{'}(a) = f^{'}(a), \\ S^{'}(b) = f^{'}(b). \end{cases}
+\end{equation*}
+
+Если известны $f^{''}(a), f^{''}(b)$, тогда
+\begin{equation*}
+  \begin{cases} S^{''}(a) = f^{''}(a), \\ S^{''}(b) = f^{''}(b). \end{cases}
+\end{equation*}
+
+Если $f(x)$ - периодическая с длиной периода $b - a$, то тогда полагают:
+\begin{equation*}
+  \begin{cases} S(a) = S(b), \\ S^{'} (a) = S^{'} (b), \\  S^{''} (a) = S^{''} (b) \end{cases}.
+\end{equation*}
+
+\textit{Рассмотрим построение сплайн-функции на $i$-том отрезке}:
+
+Введем обозначения: $M_i = S^{''}(x_i), i = \overline{0, n}$.
+
+Т.к. вторая производная сплайна является линейной функцией, то ее можно представлять в виде интерполяционного полинома Лагранжа.
+
+\begin{equation}\label{eq:11_7}
+  S^{''}_{i - 1} (x) = M_{i - 1} \dfrac{x_i - x}{h_i} + M_i \dfrac{x - x_{i -1}}{h_i},
+\end{equation}
+где $h_i = x_i - x_{i - 1}$.
+
+$M_i, M_{i - 1}$ называются моментами.
+
+Интегрируя дважды \eqref{eq:11_7}, получаем:
+\begin{equation}\label{eq:11_8}
+  S_{i - 1}(x) = M_{i - 1} \dfrac{(x_i - x)^3}{6 h_i} + M_i \dfrac{(x - x_i)^3}{6 h_i} +  C_{i - 1} (x - x_{i - 1}) + B_{i - 1}.
+\end{equation}
+
+Найдем константы $C$ и $B$. Для определения $B_i$ положим $x = x_{i - 1}$, а для определния $C_i$ положим $x = x_{i}$, тогда из \eqref{eq:11_8} $\Rightarrow$
+\begin{equation}\label{eq:11_9}
+  \begin{cases} B_{i - 1} = f_{i - 1} - \dfrac{h_i^2}{6} M_{i - 1}, \\ C_{i - 1} = \dfrac{f_i - f_{i - 1}}{h_i} - \dfrac{h_i}{6}(M_i - M_{i - 1}). \end{cases}
+\end{equation}
+
+Из требования непрерывности первой производной сплайна во внутренних узлах, находим:
+\begin{equation*}
+  S^{'}_{i - 1} = \dfrac{h_i}{6} \cdot M_{i - 1} + \dfrac{h_i}{3} \cdot M_i + \dfrac{f_i - f_{i - 1}}{h_i}.
+\end{equation*}
+
+\begin{equation*}
+  S_{i}(x) \overset{\eqref{eq:11_8}}{=} M_{i - 1} \dfrac{(x_{i+1} - x)^3}{6 h_{i+1}} + M_{i+1} \dfrac{(x - x_i)^3}{6 h_{i+1}} +  C_i (x - x_i) + B_i.
+\end{equation*}
+
+Продифференцируем и получим $S^{'}_{i}$:
+\begin{equation}\label{eq:11_10}
+  S^{'}_{i}(x) = - \dfrac{h_{i+1}}{3} M_{i}  - \dfrac{h_{i+1}}{6} M_{i+1} + \dfrac{f_{i+1} - f_i}{h_{i+1}}, i = \overline{1, m - 1}.
+\end{equation}
+
+\eqref{eq:11_10} - система из $m - 1$ уравнения относительно неизвестных моментов, которые можно записать в виде:
+
+\begin{equation}\label{eq:11_11}
+  \nu_i M_{i - 1} + 2 M_i + \lambda_i M_{i + 1} = d_i, i = \overline{1, m - 1},
+\end{equation}
+
+где
+\begin{equation*}
+  \begin{cases}
+    d_i = \dfrac{6}{h_i + h_{i + 1}} \left( \dfrac{f_{i + 1} - f_i}{h_{i + 1}} - \dfrac{f_{i} - f_{i - 1}}{h_{i}} \right), \\
+    \nu_i = \dfrac{h_i}{h_i + h_{i + 1}}, \\
+    \lambda_i = \dfrac{h_{i + 1}}{h_i + h_{i + 1}}.
+  \end{cases}
+\end{equation*}
+
+Система \eqref{eq:11_11} содержит $m+1$ неизвестных коэффициентов $M_i$ и состоит из $m-1$ уравнения, значит, система \eqref{eq:11_11} недоопределена.
+
+Недостающие 2 уравнения находят из граничных условий.
+
+Будем их записывать в общем виде:
+
+\begin{equation*}
+  2 M_0 + \lambda_0 M_1 = d_0,
+\end{equation*}
+
+\begin{equation*}
+  \nu_m M_{m - 1} + 2 M_m = d_m.
+\end{equation*}
+
+В матричной форме система уравнений относительно моментом $M_m$ имеет вид:
+
+\begin{equation}\label{eq:11_14}
+\begin{pmatrix}
+  2 & \lambda_0 & 0 & \cdots & 0 & 0 & 0\\
+  \nu_1 & 2 & \lambda_1 & \cdots & 0 & 0 & 0 \\
+  \vdots  & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+  0 & 0 & 0 & \cdots & \nu_{m - 1} & 2 & \lambda_{m - 1} \\
+  0 & 0 & 0 & \cdots & 0 & \nu_m & 2 
+ \end{pmatrix} \begin{pmatrix}
+  M_0 \\
+  M_1 \\
+  \vdots \\
+  M_{m-1} \\
+  M_m
+ \end{pmatrix}
+ = 
+ \begin{pmatrix}
+  d_0 \\
+  d_1 \\
+  \vdots \\
+  d_{m-1} \\
+  d_m
+ \end{pmatrix}
+ \end{equation}
+Система \eqref{eq:11_14} решается методом прогонки.
+
+Определив моменты $M_i$ из системы \eqref{eq:11_14}, находим по формулам \eqref{eq:11_9} $C_i$, $B_i$, затем - сами сплайны по формуле \eqref{eq:11_8}.
+
+\begin{equation}\label{eq:11_15}
+  S_{i - 1}(x) = M_{i - 1} \dfrac{(x_i - x)^3}{6 h_i} + M_i \dfrac{(x - x_{i-1})^3}{6 h_i} + \left( f_i - \frac{1}{6} h_i^2 M_{i-1} \right) \dfrac{x_i-x}{h_i} + \left( f_i - \frac{1}{6} h_i^2 M_i \right) \dfrac{x - x_{i-1}}{h_i},
+\end{equation}
+где $x \in [x_{i-1}, x_i], i = \overline{1, m}$.
+
+Определим параметры $\lambda_0, \nu_m, d_0, d_m$ для случая, когда известны $f^{'}(a), f^{'}(b)$.
+
+Продифференцируем \eqref{eq:11_15}:
+\begin{equation}\label{eq:11_16}
+  S^{'}_{i - 1}(x) = M_{i - 1} \left[ \dfrac{h_i}{6} - \dfrac{1}{2 h_i} (x_i - x)^2 \right] + M_i \left[\dfrac{1}{2 h_i} (x - x_{i-1})^2 - \dfrac{h_i}{6} \right]   + \dfrac{f_i-f_{i-1}}{h_i}, i = \overline{1, m}.
+\end{equation}
+
+\begin{enumerate}
+  \item $i = 1$:
+  \begin{equation*}
+  S^{'}_{0}(a) = M_{0} \left[ \dfrac{h_1}{6} - \dfrac{h_1}{2} \right] + M_1 \left[- \dfrac{h_1}{6} \right]   + \dfrac{f_1-f_{0}}{h_1} = f^{'}(a) = f^{'}_0, \text{т.к. $a = x_0$}.
+  \end{equation*}
+  \item $i = m$:
+  \begin{equation*}
+  S^{'}_{m-1}(b) = M_{m-1} \left[ \dfrac{h_m}{6} \right] + M_m \left[- \dfrac{h_m}{6} + \dfrac{h_m}{2}\right]   + \dfrac{f_m-f_{m-1}}{h_m} = f^{'}(b) = f^{'}_m.
+  \end{equation*}
+\end{enumerate}
+
+Запишем эти коэффициенты как:
+\begin{equation*}
+  \begin{cases}
+    2 M_0 + M_1 = \dfrac{6}{h_1} \left( \dfrac{f_1 - f_0}{h_1} - f_0 \right), \\
+    M_{m + 1} + 2 M_m = \dfrac{6}{h_m} \left(f^{'}_m - \dfrac{f_m - f_{m-1}}{h_m} \right).
+  \end{cases}
+\end{equation*}
+
+Очевидно, что:
+\begin{equation*}
+  \begin{cases}
+    \lambda_0 = 1, \\
+    d_0 = \dfrac{6}{h_1} \left( \dfrac{f_1 - f_0}{h_1} - f_0 \right), \\
+    \nu_m = 1, \\
+    d_m =  \dfrac{6}{h_m} \left(f^{'}_m - \dfrac{f_m - f_{m-1}}{h_m} \right).
+  \end{cases}
+\end{equation*}
+
+Та же самая схема для известных значений вторых производных и для периодической функции.
