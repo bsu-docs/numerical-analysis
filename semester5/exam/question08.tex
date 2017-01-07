@@ -6,6 +6,66 @@
 
 \colquestion{Минимизация остатка интерполирования}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+\textit{Критерий}.\newline
+Чебышев показал, что из всех полиномов степени $n$, $P_n(x)$ со старшим коэффициентом равным $1$, у полинома
+\begin{equation*}
+  2^{1-n} T_n(x) = \overline{T}(x).
+\end{equation*}
+
+точная верхняя грань абсолютных значений на $[-1, 1]$ наименьшая и равна $2^{1-n}$, т.к. $\max\limits_{[-1, 1]} |T_n(x)| = 1$.
+
+$\left|\left| \overline{T_n} - 0 \right| \right|_{\infty, [-1, 1]} = 2^{1-n} \Rightarrow \overline{T_n} (x)$ - полином, наименее отклоняющийся от нуля.
+
+В случае отрезка произвольной длины $x \in [a, b]$ сделаем линейную замену переменных, которая отображает $[a, b]$ на $[-1, 1]$.
+
+\begin{equation}\label{eq:8_2}
+  x = \dfrac{b-a}{2} t + \dfrac{a+b}{2} = \psi(t), t \in [-1, 1].
+\end{equation}
+
+\begin{equation*}
+  P_n(x) = x^n + P_{n-1}(x) = \psi^n (x) + P_{n-1} \Big( \psi(t) \Big) = \left(\dfrac{b-a}{2}\right)^n \overline{P_n}(t).
+\end{equation*}
+
+\begin{equation*}
+  \left|\left| P_n(x) \right| \right|_{\infty, [a, b]} = \left(\dfrac{b-a}{2}\right)^n \left|\left| \overline{P_n}(t) \right| \right|_{\infty, [-1, 1]} \geqslant 2^{1-n} \left( \dfrac{b-a}{2} \right)^n = (b-a)^n 2^{1-2n}.
+\end{equation*}
+
+Равенство в этой формуле достигается при
+\begin{equation*}
+  \overline{T_n}\overset{[a, b]}{(x)} = (b - a)^n 2^{1-2n} T_n \left( \dfrac{2x - a - b}{b - a} \right).
+\end{equation*}
+
+$\overline{T_n}\overset{[a, b]}{(x)}$ называется наименее отклоняющимся от нуля на отрезке $[a, b]$.
+
+В силу замены переменных \eqref{eq:8_2} корни $\overline{T_n}\overset{[a, b]}{(x)}$ находятся по формуле:
+\begin{equation*}
+  x_m = \dfrac{a+b}{2} + \dfrac{b-a}{2} \cos \Big( \dfrac{\pi (m + \frac{1}{2})}{n} \Big), m = \overline{0, n-1}.
+\end{equation*}
+
+Для оценки остатка интерполирования функции $f(x)$ на Чебышевской сетке узов $\{ x_m \}$ будем использовать равномерную норму:
+\begin{equation*}
+  \left| \left| f(x) \right| \right|_{\infty} = \sup\limits_{[a, b]} |f(x)|.
+\end{equation*}
+
+Из представления остатка в общем виде следует
+\begin{equation*}
+  \left| \left| f(x) - P_{n-1}(x) \right| \right| \leqslant \dfrac{1}{n!} \left| \left| f^{(n)}(x) \right| \right|  \left| \left| w_n(x) \right| \right|.
+\end{equation*}
+
+Будем минимизировать правую часть в неравенстве выше.
+\begin{equation*}
+  w_n = (x - x_1) \ldots (x - x_n), \text{deg }w_n = n, \text{ старший коэффициент равен 1}.
+\end{equation*}
+
+Поэтому в качестве узлов интерполирования $x_1, \ldots, x_n$ мы можем взять корни многочлена Чебышева. В этом случае $w_n$ будет иметь вид:
+
+\begin{equation*}
+  w_n = \overline{T_n}\overset{[a, b]}{(x)} = (b - a)^n 2^{1-2n} T_n \left( \dfrac{2x - a - b}{b - a} \right).
+\end{equation*}
+
+Из равенства выше следует что $|| w_n (x) || = (b - a)^n 2^{1-2n} \Rightarrow$ на Чебышевском наборе узлов оценка погрешности интерполирования имеет вид:
+\begin{equation*}
+  \left| \left| f(x) - P_{n}(x) \right| \right| \leqslant \dfrac{1}{n!} \left| \left| f^{(n)}(x) \right| \right| (b - a)^n 2^{1-2n}.
+\end{equation*}
+
+Мы получили неуменьшаемую оценку погрешности интерполяции.
