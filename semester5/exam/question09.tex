@@ -6,6 +6,66 @@
 
 \colquestion{Интерполирование с кратными узлами}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+Задача кратного интерполирования заключается в построении полинома наименьшей степени $n$, который удовлетворяет условиям:
+\begin{equation}\label{eq:9_1}
+  H_m^{(j)}(x_i) = f^{(j)}(x_i) = f_i^{(j)} (x_i) = f_i^{j}(1), i = \overline{0, n}, j = \overline{0, m - 1}.
+\end{equation}
+
+Все узлы $x_i$ будем считать различнымми. Через $m_i$ будем обозначать кратность $i$-того узла.
+
+Полином $H_m(x)$, удовлетворяющий условию \eqref{eq:9_1}, называется полиномом Эрмита.
+
+Число заданных условий в \eqref{eq:9_1} равно:
+\begin{equation*}
+  \sum\limits_{i=0}^n m_i = m + 1.
+\end{equation*}
+
+\begin{theorem}
+  Интерполяционный полином $H_m(x)$, удолетворяющий условию \eqref{eq:9_1}, определяется единственным образом.
+\end{theorem}
+
+\begin{theorem}
+  Полином Эрмита $H_m(x)$, определенный условиями \eqref{eq:9_1}, существует.
+\end{theorem}
+
+Рассмотрим погрешность интерполирования $R_m(x) = f(x) - H_m(x)$.
+
+\begin{theorem}
+  Пусть узлы $x_i, i = \overline{0, n}$ и точка $x \in [a, b], f(x) \in \mathbb{C}^{m + 1} [a, b]$.
+
+  Тогда
+  \begin{equation*}
+    \exists \; \overline{x} \in [a, b] \; | \; R_m(x) = \dfrac{w_{m+1}(x)}{(m+1)!} f^{(m+1)}(\overline{x}),
+  \end{equation*}
+  где $w_{m+1}(x) = (x - x_0)^{m_0} \ldots (x - x_n)^{m_n}$.
+\end{theorem}
+
+Построим $H_m(x)$ на основе расширенной таблицы разделенных разностей. Введем набор узлов
+\begin{equation*}
+  x_{ij} = x_i + j \varepsilon, \varepsilon > 0, i = \overline{0, n}, j = \overline{0, m_i - 1}.
+\end{equation*}
+
+Очевидно, что все $x_{ij}$ различны и стремятся к $x_i$ при $\varepsilon \to 0$ (по построению).
+
+Таблица разделенных разностей для расширенного набора узлов будет иметь вид:
+
+\begin{center}
+  \begin{tabular}{ | c | c | c | c |}
+    \hline
+    $f(x_{00})$          &                       &              &                \\ \hline
+                        & $f(x_{00}, x_{01})   $ &              &                \\ \hline
+    $f(x_{01})$          &                       &$f(x_{00}, x_{01}, x_{02})   $ &                  \\ \hline
+                        & $f(x_{01}, x_{02} )  $ &              &                \\ \hline
+    $\ldots$            &                 &               &  $f(x_{00}, \ldots, x_{n m_n - 1}   $  \\ \hline
+    $f(x_{0 m_0-1})$     &       &  &                   \\ \hline
+    $f(x_{1 0})$         &  &               & \\ \hline
+    $f(x_{1 m_1-1})$     &       &  &                   \\ \hline
+    $f(x_{x_n m_n - 1})$ &  &               &                 \\
+      \hline
+  \end{tabular}
+\end{center}
+
+Выражая разделенные разности через производные и переходя к пределу при $\varepsilon \to 0$, получаем:
+\begin{equation*}
+  \lim\limits_{\varepsilon \to 0} f(x_{il}, \ldots, x_{ik}) = \dfrac{f^{(k-l)} (x_i)}{(k-l)!}.
+\end{equation*}
