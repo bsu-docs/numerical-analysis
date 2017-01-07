@@ -50,29 +50,30 @@ $M_i, M_{i - 1}$ называются моментами.
 
 Интегрируя дважды \eqref{eq:11_7}, получаем:
 \begin{equation}\label{eq:11_8}
-  S_{i - 1}(x) = M_{i - 1} \dfrac{(x_i - x)^3}{6 h_i} + M_i \dfrac{(x - x_i)^3}{6 h_i} +  C_{i - 1} (x - x_{i - 1}) + B_{i - 1}.
+  S_{i - 1}(x) = M_{i - 1} \dfrac{(x_i - x)^3}{6 h_i} + M_i \dfrac{(x - x_{i_1})^3}{6 h_i} +  C_{i - 1} (x - x_{i - 1}) + B_{i - 1}.
 \end{equation}
 
 Найдем константы $C$ и $B$. Для определения $B_i$ положим $x = x_{i - 1}$, а для определния $C_i$ положим $x = x_{i}$, тогда из \eqref{eq:11_8} $\Rightarrow$
-\begin{equation}\label{eq:11_9}
+\begin{equation*}
   \begin{cases} B_{i - 1} = f_{i - 1} - \dfrac{h_i^2}{6} M_{i - 1}, \\ C_{i - 1} = \dfrac{f_i - f_{i - 1}}{h_i} - \dfrac{h_i}{6}(M_i - M_{i - 1}). \end{cases}
+\end{equation*}
+
+Первая производная сплайна должна быть непрерывна в точке $x_i$. Имеем:
+\begin{equation}\label{eq:11_9}
+  S^{'}_{i - 1}(x_i) = \dfrac{h_i}{6} \cdot M_{i - 1} + \dfrac{h_i}{3} \cdot M_i + \dfrac{f_i - f_{i - 1}}{h_i}.
 \end{equation}
 
-Из требования непрерывности первой производной сплайна во внутренних узлах, находим:
+Для сплайна на отрезке $[x_i, x_{i+1}]$ получаем:
 \begin{equation*}
-  S^{'}_{i - 1} = \dfrac{h_i}{6} \cdot M_{i - 1} + \dfrac{h_i}{3} \cdot M_i + \dfrac{f_i - f_{i - 1}}{h_i}.
+  S_{i}(x) \overset{\eqref{eq:11_8}}{=} M_i \dfrac{(x_{i+1} - x)^3}{6 h_{i+1}} + M_{i+1} \dfrac{(x - x_i)^3}{6 h_{i+1}} +  C_i (x - x_i) + B_i.
 \end{equation*}
 
-\begin{equation*}
-  S_{i}(x) \overset{\eqref{eq:11_8}}{=} M_{i - 1} \dfrac{(x_{i+1} - x)^3}{6 h_{i+1}} + M_{i+1} \dfrac{(x - x_i)^3}{6 h_{i+1}} +  C_i (x - x_i) + B_i.
-\end{equation*}
-
-Продифференцируем и получим $S^{'}_{i}$:
+Продифференцируем и получим $S^{'}_{i}(x_i)$:
 \begin{equation}\label{eq:11_10}
-  S^{'}_{i}(x) = - \dfrac{h_{i+1}}{3} M_{i}  - \dfrac{h_{i+1}}{6} M_{i+1} + \dfrac{f_{i+1} - f_i}{h_{i+1}}, i = \overline{1, m - 1}.
+  S^{'}_{i}(x_i) = - \dfrac{h_{i+1}}{3} M_{i}  - \dfrac{h_{i+1}}{6} M_{i+1} + \dfrac{f_{i+1} - f_i}{h_{i+1}}, i = \overline{1, m - 1}.
 \end{equation}
 
-\eqref{eq:11_10} - система из $m - 1$ уравнения относительно неизвестных моментов, которые можно записать в виде:
+Приравнивая \eqref{eq:11_9} и \eqref{eq:11_10}, получаем систему из $m - 1$ уравнения относительно неизвестных моментов, которую можно записать в виде:
 
 \begin{equation}\label{eq:11_11}
   \nu_i M_{i - 1} + 2 M_i + \lambda_i M_{i + 1} = d_i, i = \overline{1, m - 1},
