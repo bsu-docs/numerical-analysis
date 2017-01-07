@@ -6,6 +6,72 @@
 
 \colquestion{Разделённые разности и их свойства}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+Разделенные разности нулевого порядка совпадают со значениями функциями $f(x_i) = f_i$. Разделенная разность первого порядка записывается как
+\begin{equation*}
+  f(x_i, x_j) = \dfrac{f_j - f_i}{x_j - x_i}.
+\end{equation*}
+
+Разделенная разность второго порядка:
+\begin{equation*}
+  f(x_i, x_j, x_k) = \dfrac{f(x_j, x_k) - f(x_i, x_j)}{x_k - x_i}.
+\end{equation*}
+
+Разделенная разность $k$-ого порядка:
+\begin{equation*}
+  f(x_1, x_2, \ldots, x_{k+1}) = \dfrac{f(x_2, \ldots, x_{k+1}) - f(x_1, \ldots, x_k)}{x_{k+1} - x_1}.
+\end{equation*}
+
+\begin{lemma}
+  Разделенную разность можно представить в виде суммы
+  \begin{equation*}
+    f(x_1, \ldots, x_n) = \sum\limits_{j=1}^n \dfrac{f_j}{w^{'}_n (x_j)},
+  \end{equation*}
+  где $w(x) = (x - x_1) \ldots (x - x_n)$.
+\end{lemma}
+\begin{proof}
+ММИ.
+  \begin{enumerate}
+    \item $n = 1$. $f_1 = f_1$.
+    \item $n = 2$. $f(x_1, x_2) = \dfrac{f_2 - f_1}{x_2 - x_1} = \dfrac{f_1}{x_1 - x_2} + \dfrac{f_2}{x_2 - x_1}$.
+    \item $n = k$. $k-1$ порядка:
+    \begin{equation*}
+      f(x_1, \ldots, x_k) = \sum\limits_{j=1}^k \dfrac{f_j}{w^{'}_k(x_j)}
+    \end{equation*}
+    \begin{equation*}
+      f(x_2, \ldots, x_{k+1}) = \sum\limits_{j=2}^{k+1} \dfrac{f_j}{w^{'}_k(x_j)}
+    \end{equation*}
+    
+    \item докажем для $n = k + 1$. $k$-ый порядок:
+    \begin{equation*}
+      f(x_1, \ldots, x_{k+1}) = \dfrac{f(x_2, \ldots, x_{k+1}) - f(x_1, \ldots, x_k)}{x_{k+1} - x_k} = \dfrac{1}{x_1 - x_{k + 1}} \sum\limits_{j=1}^k \dfrac{f_j}{w^{'}(x_j)} + \dfrac{1}{x_{k + 1} - x_1} \sum\limits_{j=2}^{k+1} \dfrac{f_j}{w^{'}(x_j)} =  \sum\limits_{j=1}^{k+1} \dfrac{f_j}{w^{'}_{k+1}(x_j)}.
+    \end{equation*}
+    Найдем коэффициент при $f_j$:
+    \begin{equation*}
+      \dfrac{1}{x_{k+1} - x_1} \left( \dfrac{1}{\prod\limits_{i = 2, i \ne j}^{k+1} (x_j - x_i)} - \dfrac{1}{\prod\limits_{i = 1, i \ne j}^{k} (x_j - x_i)} \right) = \dfrac{1}{x_{k+1} - x_1} \cdot \dfrac{1}{\prod\limits_{i = 1, i \ne j}^{k+1} (x_j - x_i)} \left( (x_j - x_i) - (x_j - x_{k+1}) \right) = 
+    \end{equation*}
+    \begin{equation*}
+      = \dfrac{1}{\prod\limits_{i = 1, i \ne j}^{k+1} (x_j - x_i)} = \dfrac{1}{w^{'}_{k+1}(x_j)}
+    \end{equation*}
+  \end{enumerate}
+\end{proof}
+\begin{consequences}
+  \item Разделенная разность - линейный оператор функции $f$:
+  \begin{equation*}
+    \left( \alpha_1 f_1(x) + \alpha_2 f_2 (x) \right) (x_1, x_2, \ldots, x_n) = \alpha_1 f_1(x_1, \ldots, x_n) + \alpha_2 f_2(x_1, \ldots, x_n).
+  \end{equation*}
+  \item Разделенная разность симметрична относительно своих аргументов, т.е. не меняется от перестановки $\forall \; x_i, x_j$.
+  \item Разделенные разности удобно записывать в виде таблицы:
+  \begin{center}
+    \begin{tabular}{ | c | c | c | c |}
+      \hline
+      $x_1$ & $f_1$ &              &                \\ \hline
+            &       & $f(x_1, x_2)$ &                  \\ \hline
+      $x_2$ & $f_2$ &               & $f(x_1, x_2, x_3)$ \\ \hline
+            &       & $f(x_2, x_3)$ &                   \\ \hline
+      $x_3$ & $f_3$ &               & $f(x_2, x_3, x_4)$\\ \hline
+            &       & $f(x_3, x_4)$ &                   \\ \hline
+      $x_4$ & $f_4$ &               &                 \\
+        \hline
+    \end{tabular}
+  \end{center}
+\end{consequences}
