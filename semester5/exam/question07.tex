@@ -6,6 +6,101 @@
 
 \colquestion{Многочлен Чебышева}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+В классе ортогональных функций ортогональные многочлены имеют ряд свойств.
+
+Пусть $f(x), g(x)$ - полиномы.
+
+$(f, g) = 0$ и $\int\limits_a^b f(x) g(x) dx = 0$ - полиномы ортогональны.
+
+\begin{characteristics_}
+  \item Ортогональные многочлены удовлетворяют трехчленному рекуррентному соотношению. 
+  \item Их легко вычислить и превращать в степенной ряд.
+  \item Их нули разделяют друг друга (чередование нулей).
+\end{characteristics_}
+
+Многочлены Чебышева обладают как свойствами рядов Фурье, так и ортогональных полиномов.
+
+В сущности они являются функциями Фурье.
+
+\begin{equation*}
+  T_n(x) = \cos \Big(n \Theta(x)\Big), \Theta(x) = \arccos(x).
+\end{equation*}
+
+Покажем, что $T_n(x)$ является многочленом 
+
+\begin{equation}\label{eq:cheb_2}
+  T_0(x) = 1, T_1(x) = 1, x \in [-1, 1].
+\end{equation}
+
+\begin{equation*}
+  \cos \Big((n+1) \Theta\Big) + \cos \Big((n-1) \Theta\Big) = 2 \cos (\Theta) \cos \Big(n \Theta\Big).
+\end{equation*}
+
+\begin{equation*}
+  \Theta = \arccos x.
+\end{equation*}
+
+\begin{equation}\label{eq:cheb_4}
+  T_{n+1}(x) = 2x T_n - T_{n-1}(x), x \in [-1, 1].
+\end{equation}
+
+Равенство выше называется трехчленной рекуррентной формулой.
+
+Корни полинома Чебышева:
+\begin{equation}\label{eq:set_5}
+  x_k = \cos \left( \dfrac{\pi \left(k + \frac{1}{2}\right)}{n} \right), k = \overline{0, n - 1}.
+\end{equation}
+
+Покажем, что полиномы Чебышева $T_l (x), l = \overline{0, n - 1}$ на множестве $\{ x_k \}$ из \eqref{eq:set_5} являются ортогональными.
+
+\begin{equation*}
+  \left( T_l, T_m \right) = \sum\limits_{k = 0}^{n-1} T_l (x_k) T_m (x_k) = \sum\limits_{k = 0}^{n-1} \cos \left( \dfrac{\pi l}{n} \left(k + \frac{1}{2}\right) \right) \cos \left( \dfrac{\pi m}{n} \left(k + \frac{1}{2}\right) \right) = 
+\end{equation*}
+
+\begin{equation*}
+  = \sum\limits_{k = 0}^{n-1} \left( \dfrac{1}{2} \cos\left( \dfrac{\pi (l - m)}{n} \left(k + \frac{1}{2}\right) \right)
+  + \dfrac{1}{2} \cos\left( \dfrac{\pi (l + m)}{n} \left(k + \frac{1}{2}\right) \right)  \right) = \delta_{lm} M_l,
+\end{equation*}
+где $\delta_{ij}$ - символ Кронекера, т.е. $ \delta_{ij} = \begin{cases} 1, i = j, \\ 0, i \ne j. \end{cases}$
+\begin{equation*}
+  M_l = (1 + \delta_{lm}) \dfrac{\pi}{2}.
+\end{equation*}
+
+\begin{equation*}
+  (T_l, T_m) = 0 \; \forall \; l \ne m.
+\end{equation*}
+
+Если функция $f(x)$ задана на множестве узлов $\{ x_k \}$ по формуле \eqref{eq:set_5}, то можно построить интерполяционный полином.
+
+\begin{equation}\label{eq:cheb_8}
+  P_{n-1}(x) = \sum\limits_{l = 0}^{n-1} C_l T_l,
+\end{equation}
+где $C_l = \sum\limits_{k = 0}^{n-1} \dfrac{f_k T_l (x_k)}{M_l}$.
+
+\begin{proof}
+  \begin{equation*}
+    \left( P_{n-1}(x), T_m \right) = \sum\limits_{k = 0}^{n-1} P_{n-1}(x_k) T_m (x_k) = \sum\limits_{k = 0}^{n-1} f_k T_m(x_k) =
+  \end{equation*}
+  \begin{equation*}
+    = \left( \sum\limits_{l = 0}^{n-1} C_l T_l (x_l), T_m \right) = \sum\limits_{l = 0}^{n-1} C_l (T_l, T_m) = C_m T_m.
+  \end{equation*}
+\end{proof}
+
+Из \eqref{eq:cheb_2}, \eqref{eq:cheb_4} следует, что
+\begin{equation*}
+  T_n (x) = 2^{n-1} x^n + \ldots (n \geqslant 1).
+\end{equation*}
+
+\begin{equation*}
+  \left| \cos \Big( n \arccos x \Big) \right| = 1.
+\end{equation*}
+
+\begin{equation*}
+  n \arccos x = \pi m, m = \overline{0, n}, x \in [-1, 1].
+\end{equation*}
+
+Отсюда находим $x_m = \cos \left( \dfrac{\pi m}{n} \right)$.
+
+\begin{equation*}
+  T_n (x_m) = \cos \left( n \arccos \dfrac{\pi m}{n} \right) = \cos \Big( \pi m \Big) = (-1)^m.
+\end{equation*}
