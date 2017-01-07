@@ -6,6 +6,68 @@
 
 \colquestion{Конечные разности и их свойства}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+Основным оператором в исчислении конечных разностей является оператор $\Delta$, который определяется как:
+\begin{equation*}
+  \Delta f(x) = f(x + h) - f(x).
+\end{equation*}
+
+Из определения следует, что оператор $\Delta$ - линейный, т.е.
+\begin{equation*}
+  \Delta \left[ a f(x) + bg(x) \right] = a \Delta f(x) + b \Delta g(x).
+\end{equation*}
+
+Исследуем $\Delta \left[ f(x) g(x) \right]$.
+\begin{equation*}
+  \Delta \left[ f(x) g(x) \right] = \left[ def. \right ] = f(x+h) g(x+h) - f(x)g(x) =
+\end{equation*}
+\begin{equation*}
+  = f(x+h)g(x+h) + f(x+h)g(x) - f(x+h)g(x) - f(x)g(x) = f(x+h) \Delta g(x) + g(x) \Delta f(x).
+\end{equation*}
+
+\begin{equation*}
+  \Delta \left(\dfrac{f(x)}{g(x)} \right) = \left[ def. \right] = \dfrac{f(x+h)}{g(x+h)} - \dfrac{f(x)}{g(x)} = \dfrac{f(x+h)g(x) - f(x)g(x+h)}{g(x+h)g(x)} =
+\end{equation*}
+\begin{equation*} 
+  = \dfrac{1}{g(x+h)g(x)} \Big[ f(x+h)g(x) - g(x+h)f(x) + f(x)g(x)-f(x)g(x) \Big] = \dfrac{1}{g(x+h)g(x)} \cdot \Big[\Delta f(x)g(x) - \Delta g(x)f(x) \Big]
+\end{equation*}
+
+В формуле выше $f$ и $g$ можно поменять местами.
+
+\begin{equation*}
+  \Delta \left (\Delta f \right) = \Delta^2 f.
+\end{equation*}
+
+\begin{equation*}
+  \Delta^n f(x) = \Delta \left( \Delta^{n-1} f(x) \right) = \Delta^{n-1} \left( \Delta f(x) \right).
+\end{equation*}
+
+\begin{theorem}[основная теорема исчисления конечных разностей]
+  Для многочлена степени $n$:
+  \begin{equation*}
+    f(x) = \alpha_0 + \alpha_1 x + \ldots + \alpha_n x^n,
+  \end{equation*}
+  где $\alpha_n \ne 0$, конечная разность $n$-ого порядка равна:
+  \begin{equation*}
+    \Delta^n f = \alpha_n n! h^n, \Delta^{n+1} f = 0.
+  \end{equation*} 
+\end{theorem}
+
+\begin{lemma}
+  Если $f(x)$ - многочлена степени $n$, то $\Delta f$ есть многочлен степени $n-1$.
+\end{lemma}
+\begin{proof}
+  Рассмотрим в качестве $f = x^n$, тогда
+  \begin{equation*}
+    \Delta f(x) = (x+h)^n - x^n = \sum\limits_{k=0}^n C_n^k h^{n-k}x^k - x^n = n h x^{n-1} + \dfrac{n (n-1)}{1 \cdot 2} h^2 x^{n-2} + \ldots + h^n,
+  \end{equation*}
+  т.е. $\Delta f(x)$ - полином степени $n-1$.
+
+  Т.о., $\Delta x^n$ является полиномом степени $n-1$.
+
+  Используя свойство линейности, определяем, что оператор $\Delta$ уменьшает степень каждого члена полинома на 1.
+
+  Кроме того, член $n x^{n-1} h \alpha_n$, которые получаем в результате применения $\Delta$ к последнему слагаемому, отличен от нуля, т.к. $\alpha_n \ne 0$.
+\end{proof}
+\begin{proof}
+  теоремы перед леммой. Применим к многочлену $n$-ой степени лемму $n$ раз и убедимся, что $n$-ая разность постоянна, а коэффициент при $\alpha_n$ - $\left(n! h^n \right)$, а все следующие разности превращаются в ноль.
+\end{proof}
