@@ -6,6 +6,72 @@
 
 \colquestion{Интерполяционный многочлен Ньютона на равномерной сетке узлов}
 
-\begin{notes}
-  \item пока пусто
-\end{notes}
+Если функция задана на равномерной сетке узлов, это означает, что:
+\begin{equation*}
+  \begin{cases}
+    \Delta x_i = x_{i + 1} - x_i = h \forall \; i, \\
+    \Delta f_i = f_{i+1} - f-i.
+  \end{cases}
+\end{equation*}
+\begin{equation*}
+  \Delta^2 f_i = f_{i+2} - 2 f_{i+1} + f_i.
+\end{equation*}
+\begin{equation*}
+  f(x_i) = f_i.
+\end{equation*}
+
+Эти конечные разности соответствуют соответствующим разделенным разностям:
+\begin{equation*}
+  \underbrace{f(x_1, x_2)}_{\text{разделенная разность}} = [x_2, x_1] = \dfrac{f_2 - f_1}{x_2 - x_1} = \dfrac{f_2 - f_1}{h} = \underbrace{\dfrac{1}{h} \Delta f_1}_{\text{конечная разность}}.
+\end{equation*}
+
+Разделенная разность второго порядка:
+\begin{equation*}
+  f(x_1, x_2, x_3) = [x_3, x_2, x_1] = \dfrac{1}{x_3 - x_1} \Big( f(x_3, x_2) - f(x_1, x_2) \Big) = \dfrac{1}{2h} \left(\dfrac{\Delta f_2}{h} - \dfrac{\Delta f_1}{h} \right) = \dfrac{\Delta^2 f_1}{2! h^2}.
+\end{equation*}
+
+\begin{equation*}
+  f(x_1, x_2, \ldots, x_n) = \dfrac{\Delta^{n-1} f}{(n-1)! h^{n-1}}.
+\end{equation*}
+
+Конечные разности логично использовать для аппроксимации конечных производных.
+
+\begin{enumerate}
+  \item $\Delta f_1 \sim h f^{'} \left(x_1 + \dfrac{h}{2} \right),$
+  \item $\Delta^2 f_1 \sim h^2 f^{(2)} (x_1 + h)$,
+  \item $\ldots$,
+  \item $\Delta^n f_1 \sim h^n f^{(n)} (x_1 + \dfrac{n h}{2}).$
+\end{enumerate}
+
+Формула Ньютона для начала таблицы для равномерной сетки узлов имеет вид:
+\begin{equation*}
+  P_n(x) = f_0 + (x - x_0) \dfrac{\Delta f_0}{h} + \ldots + (x - x_0)(x - x_0 - h) (x - x_0 - (n-1)h) \dfrac{\Delta^n f_0}{n! h^n}.
+\end{equation*}
+\begin{equation*}
+  t = \dfrac{x - x_0}{h} \Rightarrow x - x_0 = th, x - x_1 = x - x_0 - h = h(t-1).
+\end{equation*}
+\begin{equation*}
+  P_n(x) = P_n (x_0 + th) = f_0 + \dfrac{f}{1!} \Delta f_0 + \dfrac{t (t-1)}{2!} \Delta^2 f_0 + \ldots + \dfrac{t (t-1) \ldots (t - n + 1)}{n!} \Delta^n f_0.
+\end{equation*}
+\begin{equation*}
+  P_n(x) = h^{n+1} \dfrac{t(t-1)\ldots(t-n)}{(n+1)!} f^{(n+1)} (\xi).
+\end{equation*}
+
+Запишем представления раздельных разностей в конце таблицы:
+$\begin{cases}
+  f(x_n, x_{n-1}) = \dfrac{\Delta f_{n-1}}{1! n}, \\
+  f(x_n, x_{n-1}, x_{n-2}) = \dfrac{\Delta^2 f_{n-2}}{2! h^2}, \\
+  f(x_n, \ldots, x_0) = \dfrac{\Delta^n f_0}{n! h^n}.
+\end{cases}$
+
+\begin{equation*}
+  t = \dfrac{x - x_n}{h},
+\end{equation*}
+
+\begin{equation*}
+  P_n(x_n + th) = f_n + \dfrac{t}{1!} \Delta f_{n-1} + \dfrac{t (t + 1)}{2!} \Delta^2 f_{n-2} + \ldots + \dfrac{t (t + 1) \ldots (t + n - 1)}{n!} \Delta^n f_0,
+\end{equation*}
+
+\begin{equation*}
+  P_n(x) = h^{n+1} \dfrac{t(t+1)\ldots (t+n)}{(n+1)!} f^{(n+1)} (\xi).
+\end{equation*}
