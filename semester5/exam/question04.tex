@@ -6,6 +6,58 @@
 
 \colquestion{Интерполяционный многочлен Ньютона}
 
+Интерполяционный многочлен Ньютона представляет собой другую форму записи интерполяционного многочлена.
+
+Она полезна, т.к. позволяет легко увеличивать или уменьшать число использованных узлов без повторных числений.
+
+Пусть есть набор точек $(x_i, f_i), i = \overline{0, n}$. Построим интерполяционный многочлен для этой сеточной функции:
+\begin{equation*}
+  P_n(x) = f_0 + (x - x_0) P_{n - 1}(x) \Rightarrow P_{n-1} (x) = \dfrac{P_n(x) - f_0}{x - x_0},
+\end{equation*}
+где $x_1, \ldots, x_n$ в качестве $x$. Для задания $P_{n-1}(x)$ нужно $n$ коэффициентов = $n$ уравений.
+\begin{equation*}
+  P_{n-1}(x_i) = \dfrac{P_n(x_i) - f_0}{x_i - x_0} = \dfrac{f_i - f_0}{x_i - x_0}, i = \overline{1, n}.
+\end{equation*}
+Значит, искомый полином проходит через точки $\left( x_i, \dfrac{f_i - f_0}{x_i - x_0} \right)$, где $\dfrac{f_i - f_0}{x_i - x_0}$ - разделенная разность первого порядка.
+
+Обозначим $\dfrac{f_i - f_0}{x_i - x_0} = f(x_0, x_i)$.
+
+Значит, $P_{n-1}(x)$ можно представить в виде:
+\begin{equation*}
+  P_{n-1}(x) = f(x_0, x_1) + (x - x_1)P_{n-2}(x).
+\end{equation*}
+
+Для нахождения $P_{n-2} (x)$ проделаем те же действия, что и для $P_{n-1} (x):$
+
+\begin{equation*}
+  P_{n-2}(x) = \dfrac{P_{n-1}(x) - f(x_0, x_1)}{x - x_1}
+\end{equation*}
+
+\begin{equation*}
+  \dfrac{f(x_0, x_i) - f(x_0, x_1)}{x_i - x_1} = f(x_0, x_1, x_i), i = \overline{2, n}.
+\end{equation*}
+
+\begin{equation}\label{eq:begin_table}
+  P_n(x) = f_0 + (x - x_0) f(x_0, x_1) + (x - x_0)(x - x_1)f(x_0, x_1, x_2) + \ldots + (x-x_0)(x-x_1)\ldots(x-x_{n-1})f(x_0, x_1,\ldots, x_n)
+\end{equation}
+
+Погрешность интерационного многочлена через разделенные разности:
+\begin{equation*}
+  f(x) - P_n(x) = f(x) - \sum\limits_{i=0}^n f_i \prod\limits_{j=0, j \ne i}^n \dfrac{x - x_j}{x_i - x_j} = \underbrace{\prod\limits_{j=0}^n (x - x_j)}_{w(x)} \underbrace{\left[ \dfrac{f(x)}{\prod\limits_{j=0}^n (x - x_j)} + \sum\limits_{i=0}^n \dfrac{f_i}{(x_i - x)\prod\limits_{j=0, j \ne i}^n (x_i - x_j)}  \right]}_{f(x, x_0, x_1, \ldots, x_n)} =
+\end{equation*}
+\begin{equation*}
+  = \left[ \text{для } f(x, x_0, x_1, \ldots, x_n) \text{ см Лемму о представлении РР в виде суммы в пред вопросе} \right] = 
+\end{equation*}
+\begin{equation*}
+  = w(x) f(x, x_0, x_1, \ldots, x_n) = \dfrac{1}{(n+1)!} f^{(n+1)} (\xi) w(x).
+\end{equation*}
+Отсюда получаем, что $f(x, x_0, x_1, \ldots, x_n) = \dfrac{f^{(n+1)} (\xi)}{(n+1)!}$.
+
 \begin{notes}
-  \item пока пусто
+  \item При построении формулы Ньютона порядок расположения узолв $x_0, \ldots, x_n$ значения не имеет. В качестве точки $x_0$ мы можем взять и точу $x_n$. Пусть $x_0 := x_n$. Тогда:
+  \begin{equation}\label{eq:end_table}
+    P_n(x) = f_n + (x - x_n) f(x_n, x_{n-1}) + (x - x_n) (x - x_{n-1}) f(x_n, x_{n-1}, x_{n-2}) + \ldots + (x - x_n)(x - x_{n-1}) \cdot \ldots \cdot (x - x_1)f(x_n, \ldots, x_0).
+  \end{equation}
+  Если узлы упорядочены по возрастанию $x_0 < x_1 < \ldots < x_n$, то формула записи \eqref{eq:begin_table} носит название формула записи Ньютона для начала таблицы, а \eqref{eq:end_table} - форма записи Ньютона для конца таблицы.
+  \item Хотя теоретически нет необходимости упорядочивать множество узлов $\{ x_i \} $ по возрастанию и убыванию, гладкость в таблице разделенных разностей нарушается, если такого порядка нет. Поэтому, программируя, используется упорядоченное множество сетки.
 \end{notes}
