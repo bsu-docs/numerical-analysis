@@ -66,16 +66,16 @@ $G$ называется линейным многообразием.
   \item Типичным примером гилбертова пространства является пространство $L_2 [a, b]$ - пространство функций $f(x)$, интегрируемых с квадратом на отрезке $[a, b]$, причем:
 
   \begin{equation*}
-  (f, g)_{L_2} = \int\limits_a^b g(x) \overline{g(x)} dx,
+  (f, g)_{L_2} = \int\limits_a^b \rho(x) f(x) \overline{g(x)} dx,
   \end{equation*}
 
   \begin{equation*}
-    \left| \left| f \right| \right|_{L_2}^2 \left( \int\limits_a^b g(x) f^2(x) dx \right)^{\frac{1}{2}}
+    \left| \left| f \right| \right|_{L_2}^2 = \left( \int\limits_a^b \rho(x) f^2(x) dx \right)^{\frac{1}{2}}
   \end{equation*}
 
-  $g(x) \geqslant 0$ - весовая функция.
+  $\rho(x) \geqslant 0$ - весовая функция.
 
-  $g(x) = 0$ на граничном числе точке, мера которых равна 0.
+  $\rho(x) = 0$ на граничном числе точек, мера которого равна 0.
 
   \item Коэффициенты Фурье $\alpha_i$ дают наилучшие в системе наименьших квадратов приближения, когда $f(x)$ разлагается по ортогональному базису элементов $g_i$.
 
