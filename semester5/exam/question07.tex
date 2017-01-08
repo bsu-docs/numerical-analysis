@@ -79,10 +79,13 @@ $(f, g) = 0$ и $\int\limits_a^b f(x) g(x) dx = 0$ - полиномы ортог
 
 \begin{proof}
   \begin{equation*}
-    \left( P_{n-1}(x), T_m \right) = \sum\limits_{k = 0}^{n-1} P_{n-1}(x_k) T_m (x_k) = \sum\limits_{k = 0}^{n-1} f_k T_m(x_k) =
+    \left( P_{n-1}(x), T_m \right) = \sum\limits_{k = 0}^{n-1} P_{n-1}(x_k) T_m (x_k) = \sum\limits_{k = 0}^{n-1} f_k T_m(x_k)
   \end{equation*}
   \begin{equation*}
-    = \left( \sum\limits_{l = 0}^{n-1} C_l T_l (x_l), T_m \right) = \sum\limits_{l = 0}^{n-1} C_l (T_l, T_m) = C_m T_m.
+    \left( P_{n-1}(x), T_m \right) =( \sum\limits_{l = 0}^{n-1} C_l T_l (x_l), T_m ) = \sum\limits_{l = 0}^{n-1} C_l (T_l, T_m) = C_m M_m.
+  \end{equation*}
+  \begin{equation*}
+	C_m = \sum\limits_{k = 0}^{n-1} \dfrac{f_k T_m (x_k)}{M_m}
   \end{equation*}
 \end{proof}
 
