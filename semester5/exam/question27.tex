@@ -47,8 +47,8 @@
 
 Рассмотрим оператор $Lu$ в \eqref{27-problem}, который содержит смешанные производные
 \begin{equation}
-  Lu = \sum\limits_{\alpha, \beta = 1}^{2}L_{\alpha, \beta}u = -\dfrac{\partial}
-  {\partial x}\left(k_{\alpha\beta}(x)\dfrac{\partial u}{\partial x_{\beta}}\right)
+  Lu = \sum\limits_{\alpha, \beta = 1}^{2}L_{\alpha \beta}u, \hspace{5mm} L_{\alpha \beta}u = -\dfrac{\partial}
+  {\partial x_{\alpha}}\left(k_{\alpha\beta}(x)\dfrac{\partial u}{\partial x_{\beta}}\right)
 \end{equation}
 
 \begin{align*}
@@ -78,7 +78,7 @@ $\Lambda_{\alpha\beta}^- + \Lambda_{\alpha\beta}^+$ имеют первый по
 \begin{equation}
   \begin{split}
     &a_{11}(x_1, x_2) = \dfrac{1}{2}(k_{11}(x_1 - h_1, x_2) + k_{11}(x_1, x_2))\\
-    &x_{22}(x_1, x_2) = \dfrac{1}{2}(k_{22}(x_1, x_2 - h_2) + k_{22}(x_1, x_2))
+    &a_{22}(x_1, x_2) = \dfrac{1}{2}(k_{22}(x_1, x_2 - h_2) + k_{22}(x_1, x_2))
   \end{split}
 \end{equation}
 \begin{align*}
@@ -112,7 +112,7 @@ $\Lambda_{\alpha\beta}^- + \Lambda_{\alpha\beta}^+$ имеют первый по
 \end{align}
 
 \begin{note}
-  Вместо семиточечного шаблона можно использовать другой шаблон
+  Можно использовать другой семиточечный шаблон
   \begin{align*}
     \Lambda_{\alpha\beta}y = -\dfrac{1}{2}((k_{\alpha\beta y_{x\beta}})_
     {x_{\alpha}} + (k_{\alpha\beta}y_{\overline{x}\beta})_{\overline{x}_{\alpha}})
