@@ -20,7 +20,7 @@
   f(x_i) = f_i.
 \end{equation*}
 
-Эти конечные разности соответствуют соответствующим разделенным разностям:
+Эти конечные разности соответствуют разделенным разностям:
 \begin{equation*}
   \underbrace{f(x_1, x_2)}_{\text{разделенная разность}} = [x_2, x_1] = \dfrac{f_2 - f_1}{x_2 - x_1} = \dfrac{f_2 - f_1}{h} = \underbrace{\dfrac{1}{h} \Delta f_1}_{\text{конечная разность}}.
 \end{equation*}
@@ -34,7 +34,7 @@
   f(x_1, x_2, \ldots, x_n) = \dfrac{\Delta^{n-1} f}{(n-1)! h^{n-1}}.
 \end{equation*}
 
-Конечные разности логично использовать для аппроксимации конечных производных.
+Конечные разности можно использовать для аппроксимации конечных производных.
 
 \begin{enumerate}
   \item $\Delta f_1 \sim h f^{'} \left(x_1 + \dfrac{h}{2} \right),$
@@ -45,7 +45,7 @@
 
 Формула Ньютона для начала таблицы для равномерной сетки узлов имеет вид:
 \begin{equation*}
-  P_n(x) = f_0 + (x - x_0) \dfrac{\Delta f_0}{h} + \ldots + (x - x_0)(x - x_0 - h) (x - x_0 - (n-1)h) \dfrac{\Delta^n f_0}{n! h^n}.
+  P_n(x) = f_0 + (x - x_0) \dfrac{\Delta f_0}{h} + \ldots + (x - x_0)(x - x_0 - h)\ldots(x - x_0 - (n-1)h) \dfrac{\Delta^n f_0}{n! h^n}.
 \end{equation*}
 \begin{equation*}
   t = \dfrac{x - x_0}{h} \Rightarrow x - x_0 = th, x - x_1 = x - x_0 - h = h(t-1).
@@ -57,7 +57,7 @@
   R_n(x) = h^{n+1} \dfrac{t(t-1)\ldots(t-n)}{(n+1)!} f^{(n+1)} (\xi).
 \end{equation*}
 
-Запишем представления раздельных разностей в конце таблицы:
+Запишем представления разделённых разностей в конце таблицы:
 $\begin{cases}
   f(x_n, x_{n-1}) = \dfrac{\Delta f_{n-1}}{1! n}, \\
   f(x_n, x_{n-1}, x_{n-2}) = \dfrac{\Delta^2 f_{n-2}}{2! h^2}, \\
